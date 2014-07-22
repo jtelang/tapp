@@ -1,0 +1,15 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="navigation_drawer_width">240dp</dimen>
+    <dimen name="margine_very_small">2dp</dimen>
+    <dimen name="margine_small">4dp</dimen>
+    <dimen name="margine_normal">8dp</dimen>
+    <dimen name="margine_large">12dp</dimen>
+    <dimen name="margine_extra_large">16dp</dimen>
+    <dimen name="margine_very_large">24dp</dimen>
+    <dimen name="contact_image_size">60dp</dimen>
+
+</resources>
