@@ -904,6 +904,7 @@ containing a value of this type.
         public static final int margine_very_large=0x7f080019;
         public static final int margine_very_small=0x7f080014;
         public static final int navigation_drawer_width=0x7f080013;
+        public static final int profile_image_size=0x7f08001b;
     }
     public static final class drawable {
         public static final int abc_ab_bottom_solid_dark_holo=0x7f020000;
@@ -1010,17 +1011,17 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f050016;
         public static final int action_menu_presenter=0x7f050017;
         public static final int action_mode_close_button=0x7f050024;
-        public static final int action_settings=0x7f050051;
+        public static final int action_settings=0x7f050052;
         public static final int activity_chooser_view_content=0x7f050025;
         public static final int always=0x7f05000b;
         public static final int beginning=0x7f050011;
         public static final int btnGo=0x7f050042;
-        public static final int button1=0x7f050049;
-        public static final int button2=0x7f05004a;
+        public static final int button1=0x7f05004b;
+        public static final int button2=0x7f05004c;
         public static final int checkbox=0x7f05002d;
         public static final int collapseActionView=0x7f05000d;
         public static final int container=0x7f05003c;
-        public static final int content_container=0x7f050047;
+        public static final int content_container=0x7f050049;
         public static final int default_activity_button=0x7f050028;
         public static final int dialog=0x7f05000e;
         public static final int disableHome=0x7f050008;
@@ -1036,21 +1037,22 @@ containing a value of this type.
         public static final int icon=0x7f05002a;
         public static final int ifRoom=0x7f05000a;
         public static final int image=0x7f050027;
-        public static final int imvPhoto=0x7f05004d;
+        public static final int imvPhoto=0x7f05004f;
+        public static final int imvProfile=0x7f050045;
         public static final int linearLayout1=0x7f05003f;
         public static final int listMode=0x7f050001;
-        public static final int listView=0x7f05004b;
+        public static final int listView=0x7f05004d;
         public static final int list_item=0x7f050029;
-        public static final int lnrOptionContainer=0x7f050048;
+        public static final int lnrOptionContainer=0x7f05004a;
         public static final int middle=0x7f050012;
         public static final int navigation_drawer=0x7f050044;
         public static final int never=0x7f050009;
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
         public static final int progress_circular=0x7f050018;
-        public static final int progress_container=0x7f050045;
+        public static final int progress_container=0x7f050047;
         public static final int progress_horizontal=0x7f050019;
-        public static final int progress_text=0x7f050046;
+        public static final int progress_text=0x7f050048;
         public static final int radio=0x7f05002f;
         public static final int search_badge=0x7f050032;
         public static final int search_bar=0x7f050031;
@@ -1073,11 +1075,11 @@ containing a value of this type.
         public static final int textView1=0x7f05003d;
         public static final int title=0x7f05002b;
         public static final int top_action_bar=0x7f050020;
-        public static final int txtContactFlag=0x7f05004e;
+        public static final int txtContactFlag=0x7f050050;
         public static final int txtCountryCode=0x7f050040;
-        public static final int txtEmptyView=0x7f05004c;
-        public static final int txtName=0x7f05004f;
-        public static final int txtStatus=0x7f050050;
+        public static final int txtEmptyView=0x7f05004e;
+        public static final int txtName=0x7f050051;
+        public static final int txtStatus=0x7f050046;
         public static final int up=0x7f050021;
         public static final int useLogo=0x7f050003;
         public static final int withText=0x7f05000c;
@@ -1133,13 +1135,14 @@ containing a value of this type.
         public static final int abc_search_view=0x7f030016;
         public static final int activity_login=0x7f030017;
         public static final int activity_main=0x7f030018;
-        public static final int activity_splash=0x7f030019;
-        public static final int fragment_buy=0x7f03001a;
-        public static final int fragment_friend_list=0x7f03001b;
-        public static final int fragment_navigation_drawer=0x7f03001c;
-        public static final int fragment_progress=0x7f03001d;
-        public static final int row_friend_list=0x7f03001e;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001f;
+        public static final int activity_profile=0x7f030019;
+        public static final int activity_splash=0x7f03001a;
+        public static final int fragment_buy=0x7f03001b;
+        public static final int fragment_friend_list=0x7f03001c;
+        public static final int fragment_navigation_drawer=0x7f03001d;
+        public static final int fragment_progress=0x7f03001e;
+        public static final int row_friend_list=0x7f03001f;
+        public static final int support_simple_spinner_dropdown_item=0x7f030020;
     }
     public static final class menu {
         public static final int main=0x7f0d0000;
@@ -1197,6 +1200,8 @@ containing a value of this type.
         public static final int enter_phone=0x7f0a001b;
         public static final int games=0x7f0a0020;
         public static final int go=0x7f0a001a;
+        public static final int invitation_message=0x7f0a0025;
+        public static final int invitation_sent=0x7f0a0026;
         public static final int invite=0x7f0a0023;
         public static final int loading=0x7f0a0014;
         public static final int music=0x7f0a001f;
@@ -1205,7 +1210,7 @@ containing a value of this type.
         public static final int no_contacts_available=0x7f0a0022;
         public static final int number_confirmation=0x7f0a001c;
         public static final int select_option=0x7f0a001e;
-        public static final int temp_json=0x7f0a0025;
+        public static final int temp_json=0x7f0a0027;
         /**  Buy screen 
          */
         public static final int title_buy=0x7f0a001d;

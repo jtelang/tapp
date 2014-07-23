@@ -11,5 +11,7 @@
     <dimen name="margine_extra_large">16dp</dimen>
     <dimen name="margine_very_large">24dp</dimen>
     <dimen name="contact_image_size">60dp</dimen>
+    
+    <dimen name="profile_image_size">100dp</dimen>
 
 </resources>

@@ -3,8 +3,10 @@ package com.tapp.adapters;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -14,17 +16,19 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tapp.R;
 import com.tapp.data.ContactData;
+import com.tapp.utils.Toast;
 import com.tapp.utils.Utils;
 
 public class FriendListAdapter extends BaseAdapter {
 
+	private Activity activity = null;
 	private ArrayList<ContactData> list = null;
 	private LayoutInflater mInflater = null;
 	private ImageLoader imageLoader = null;
 	private DisplayImageOptions options = null;
 
 	public FriendListAdapter(Activity activity, ArrayList<ContactData> list) {
-
+		this.activity = activity;
 		this.list = list;
 
 		mInflater = LayoutInflater.from(activity);
@@ -59,14 +63,14 @@ public class FriendListAdapter extends BaseAdapter {
 			mHolder.imvPhoto = (ImageView) convertView.findViewById(R.id.imvPhoto);
 			mHolder.txtName = (TextView) convertView.findViewById(R.id.txtName);
 			mHolder.txtStatus = (TextView) convertView.findViewById(R.id.txtStatus);
-			mHolder.txtContactTypeFlag = (TextView) convertView.findViewById(R.id.txtContactFlag);
+			mHolder.txtContactType = (TextView) convertView.findViewById(R.id.txtContactFlag);
 
 			convertView.setTag(mHolder);
 		} else {
 			mHolder = (ViewHolder) convertView.getTag();
 		}
 
-		ContactData data = list.get(position);
+		final ContactData data = list.get(position);
 
 		if (data != null) {
 
@@ -74,11 +78,11 @@ public class FriendListAdapter extends BaseAdapter {
 			mHolder.txtStatus.setText(data.getStatus());
 
 			if (data.getContactTypeFlag() == 0) {
-				mHolder.txtContactTypeFlag.setText("Invite");
+				mHolder.txtContactType.setText("Invite");
 			} else if (data.getContactTypeFlag() == 1) {
-				mHolder.txtContactTypeFlag.setText("Tapp");
+				mHolder.txtContactType.setText("Tapp");
 			} else if (data.getContactTypeFlag() == 2) {
-				mHolder.txtContactTypeFlag.setText("Friend");
+				mHolder.txtContactType.setText("Friend");
 			}
 
 			if (!Utils.isEmpty(data.getPhotoUrl())) {
@@ -86,6 +90,19 @@ public class FriendListAdapter extends BaseAdapter {
 			} else {
 				mHolder.imvPhoto.setImageResource(R.drawable.ic_launcher);
 			}
+
+			mHolder.txtContactType.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+
+					if (data.getContactTypeFlag() == 0) {
+
+						SmsManager sm = SmsManager.getDefault();
+						sm.sendTextMessage(data.getPhoneNo(), null, activity.getString(R.string.invitation_message), null, null);
+						Toast.displayText(activity, R.string.invitation_sent);
+					}
+				}
+			});
 		}
 
 		return convertView;
@@ -95,6 +112,6 @@ public class FriendListAdapter extends BaseAdapter {
 		TextView txtName;
 		TextView txtStatus;
 		ImageView imvPhoto;
-		TextView txtContactTypeFlag;
+		TextView txtContactType;
 	}
 }
