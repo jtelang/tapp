@@ -11,7 +11,10 @@
     <string name="loading">Loading&#8230;</string>
     <string name="edit">Edit</string>
     <string name="yes">Yes</string>
+
+    <!-- Action menu -->
     <string name="action_settings">Settings</string>
+    <string name="action_add_me">Add Me</string>
 
     <!-- Login screen -->
 
@@ -34,6 +37,18 @@
     <string name="available">Available</string>
     <string name="invitation_message">Please download Tapp for android</string>
     <string name="invitation_sent">Invitation sent successfully</string>
-    <string name="temp_json" >[{\"phoneNo\":\"9898989898\",\"name\":\"John\",\"contactTypeFlag\":1,\"photoUrl\":\"http://blog.room34.com/wp-content/uploads/underdog/logo.thumbnail.png\",\"status\":\"Hello All\"},{\"phoneNo\":\"9999999999\",\"name\":\"David\",\"contactTypeFlag\":2,\"photoUrl\":\"http://www.iconshock.com/img_jpg/STROKE/communications/jpg/256/thumbnail_icon.jpg\",\"status\":\"Hi!\"},{\"phoneNo\":\"9988998899\",\"name\":\"Jonny\",\"contactTypeFlag\":1,\"photoUrl\":\"http://mariamontessori.com/mm/wp-content/uploads/2012/01/Connecting_to_Nature-thumbnail.jpg\",\"status\":\"Never say Never!\"}]</string>
+    <string name="temp_json">[{\"phoneNo\":\"9898989898\",\"name\":\"John\",\"contactTypeFlag\":1,\"photoUrl\":\"http://blog.room34.com/wp-content/uploads/underdog/logo.thumbnail.png\",\"status\":\"Hello All\"},{\"phoneNo\":\"9999999999\",\"name\":\"David\",\"contactTypeFlag\":2,\"photoUrl\":\"http://www.iconshock.com/img_jpg/STROKE/communications/jpg/256/thumbnail_icon.jpg\",\"status\":\"Hi!\"},{\"phoneNo\":\"9988998899\",\"name\":\"Jonny\",\"contactTypeFlag\":1,\"photoUrl\":\"http://mariamontessori.com/mm/wp-content/uploads/2012/01/Connecting_to_Nature-thumbnail.jpg\",\"status\":\"Never say Never!\"}]</string>
+
+    <!-- Detail screen -->
+    <string name="title_profile">Profile</string>
+    <string name="full_name">Full name:</string>
+    <string name="email">Email:</string>
+    <string name="birthday">Birthday:</string>
+    <string name="sex">Sex:</string>
+    <string name="age">Age:</string>
+    <string name="webpage">Webpage:</string>
+    <string name="city">City:</string>
+    <string name="followers">Followers:</string>
+    <string name="view_all">View All</string>
 
 </resources>

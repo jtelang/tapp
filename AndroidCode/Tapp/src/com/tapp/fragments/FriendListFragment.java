@@ -7,20 +7,23 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.provider.ContactsContract.RawContacts;
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.tapp.R;
+import com.tapp.ViewProfileActivity;
 import com.tapp.adapters.FriendListAdapter;
 import com.tapp.base.BaseFragment;
 import com.tapp.data.ConstantData;
@@ -46,6 +49,15 @@ public class FriendListFragment extends BaseFragment {
 		listView = (ListView) view.findViewById(R.id.listView);
 		txtEmptyView = (TextView) view.findViewById(R.id.txtEmptyView);
 		listView.setEmptyView(txtEmptyView);
+
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+
+				Intent intent = new Intent(getActivity(), ViewProfileActivity.class);
+				startActivity(intent);
+			}
+		});
 
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
