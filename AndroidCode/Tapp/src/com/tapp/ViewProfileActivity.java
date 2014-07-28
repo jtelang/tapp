@@ -1,9 +1,11 @@
 package com.tapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,9 +30,9 @@ public class ViewProfileActivity extends ActionBarActivity implements OnClickLis
 	}
 
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.menu_view_profile, menu);
-		super.onCreateContextMenu(menu, v, menuInfo);
+		return true;
 	}
 
 	@Override
@@ -47,6 +49,8 @@ public class ViewProfileActivity extends ActionBarActivity implements OnClickLis
 
 		if (view.equals(btnViewAllFollowers)) {
 
+			Intent intent = new Intent(ViewProfileActivity.this, BuyActivity.class);
+			startActivity(intent);
 		}
 	}
 }

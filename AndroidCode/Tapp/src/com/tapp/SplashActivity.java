@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 
+import com.google.android.gcm.GCMRegistrar;
 import com.tapp.data.ConstantData;
 import com.tapp.data.DBHelper;
 import com.tapp.service.TappContactService;
+import com.tapp.utils.ConnectivityTools;
 
 public class SplashActivity extends Activity {
 
@@ -56,6 +59,67 @@ public class SplashActivity extends Activity {
 			//
 			// }
 			//
+
+			if (TappContactService.getInstance() == null) {
+				Intent intent = new Intent(SplashActivity.this, TappContactService.class);
+				startService(intent);
+			}
+
+			if (ConnectivityTools.isNetworkAvailable(SplashActivity.this)) {
+				getRegisterIDForGCM();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void getRegisterIDForGCM() {
+
+		try {
+
+			GCMRegistrar.checkDevice(this);
+			GCMRegistrar.checkManifest(this);
+			String registerId = GCMRegistrar.getRegistrationId(this);
+
+			if (!ConstantData.GCM_REGISTERED_ID.equals(registerId)) {
+				ConstantData.GCM_REGISTERED_ID = "";
+			}
+
+			if (ConstantData.GCM_REGISTERED_ID.equals("")) {
+
+				GCMRegistrar.register(this, ConstantData.SENDER_ID);
+
+				new Thread(new Runnable() {
+					public void run() {
+
+						try {
+							Looper.prepare();
+							while (ConstantData.GCM_REGISTERED_ID.equals("")) {
+								Thread.sleep(500);
+							}
+
+							Log.i("Join8 GCM SenderId", ConstantData.GCM_REGISTERED_ID);
+
+							Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+							startActivity(intent);
+							finish();
+
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				}).start();
+
+			} else {
+				Log.i("Join8 GCM SenderId", ConstantData.GCM_REGISTERED_ID);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.e("Error in SplashScreen", e.toString());
+		} finally {
+
 			new Handler().postDelayed(new Runnable() {
 				public void run() {
 
@@ -64,16 +128,9 @@ public class SplashActivity extends Activity {
 					finish();
 				}
 			}, SPLASH_DISPLAY_LENGHT);
-
-			if (TappContactService.getInstance() == null) {
-				Intent intent = new Intent(SplashActivity.this, TappContactService.class);
-				startService(intent);
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
+
 	@Override
 	public void onBackPressed() {
 
