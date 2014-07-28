@@ -62,14 +62,21 @@
         <activity
             android:name=".ViewProfileActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/title_login"
+            android:label="@string/title_profile"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".BuyActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/title_login"
+            android:label="@string/title_buy"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name=".MyCreditsActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/my_credits"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" >
         </activity>

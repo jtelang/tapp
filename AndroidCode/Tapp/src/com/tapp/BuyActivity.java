@@ -2,16 +2,21 @@ package com.tapp;
 
 import java.util.Calendar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
-public class BuyActivity extends ActionBarActivity {
+public class BuyActivity extends ActionBarActivity implements OnClickListener {
 
 	private Spinner spnMonth = null, spnYear = null;
+	private Button btnCancel = null;
 
 	private String[] arrayMonth = null, arrayYear = null;
 
@@ -23,6 +28,9 @@ public class BuyActivity extends ActionBarActivity {
 
 		spnMonth = (Spinner) findViewById(R.id.spnMonth);
 		spnYear = (Spinner) findViewById(R.id.spnYear);
+		btnCancel = (Button) findViewById(R.id.btnCancel);
+
+		btnCancel.setOnClickListener(this);
 
 		arrayMonth = getResources().getStringArray(R.array.month);
 		arrayYear = new String[20];
@@ -45,9 +53,26 @@ public class BuyActivity extends ActionBarActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
-		if (item.getItemId() == R.id.action_settings) {
+		if (item.getItemId() == R.id.action_my_credits) {
+
+			Intent intent = new Intent(BuyActivity.this, MyCreditsActivity.class);
+			startActivity(intent);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onClick(View v) {
+
+		switch (v.getId()) {
+
+			case R.id.btnCancel :
+				finish();
+				break;
+
+			default :
+				break;
+		}
 	}
 }

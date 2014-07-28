@@ -49,8 +49,8 @@ public class ViewProfileActivity extends ActionBarActivity implements OnClickLis
 
 		if (view.equals(btnViewAllFollowers)) {
 
-			Intent intent = new Intent(ViewProfileActivity.this, BuyActivity.class);
-			startActivity(intent);
+//			Intent intent = new Intent(ViewProfileActivity.this, BuyActivity.class);
+//			startActivity(intent);
 		}
 	}
 }

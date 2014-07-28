@@ -97,8 +97,8 @@ public class FriendListAdapter extends BaseAdapter {
 
 					if (data.getContactTypeFlag() == 0) {
 
-						SmsManager sm = SmsManager.getDefault();
-						sm.sendTextMessage(data.getPhoneNo(), null, activity.getString(R.string.invitation_message), null, null);
+//						SmsManager sm = SmsManager.getDefault();
+//						sm.sendTextMessage(data.getPhoneNo(), null, activity.getString(R.string.invitation_message), null, null);
 						Toast.displayText(activity, R.string.invitation_sent);
 					}
 				}

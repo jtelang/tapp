@@ -12,8 +12,8 @@ public class BootStartReceiver extends BroadcastReceiver {
 
 		try {
 
-			Intent intent = new Intent(context, TappContactService.class);
-			context.startService(intent);
+//			Intent intent = new Intent(context, TappContactService.class);
+//			context.startService(intent);
 
 		} catch (Exception e) {
 			e.printStackTrace();
