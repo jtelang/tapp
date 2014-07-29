@@ -60,24 +60,23 @@ public class SplashActivity extends Activity {
 			// }
 			//
 
-			// if (TappContactService.getInstance() == null) {
-			// Intent intent = new Intent(SplashActivity.this,
-			// TappContactService.class);
-			// startService(intent);
+			if (TappContactService.getInstance() == null) {
+				Intent intent = new Intent(SplashActivity.this, TappContactService.class);
+				startService(intent);
+			}
+
+			// new Handler().postDelayed(new Runnable() {
+			// public void run() {
+			//
+			// Intent i = new Intent(SplashActivity.this, LoginActivity.class);
+			// startActivity(i);
+			// finish();
 			// }
+			// }, SPLASH_DISPLAY_LENGHT);
 
-			new Handler().postDelayed(new Runnable() {
-				public void run() {
-
-					Intent i = new Intent(SplashActivity.this, LoginActivity.class);
-					startActivity(i);
-					finish();
-				}
-			}, SPLASH_DISPLAY_LENGHT);
-
-			// if (ConnectivityTools.isNetworkAvailable(SplashActivity.this)) {
-			// getRegisterIDForGCM();
-			// }
+			if (ConnectivityTools.isNetworkAvailable(SplashActivity.this)) {
+				getRegisterIDForGCM();
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -92,8 +91,10 @@ public class SplashActivity extends Activity {
 			GCMRegistrar.checkManifest(this);
 			String registerId = GCMRegistrar.getRegistrationId(this);
 
-			if (!ConstantData.GCM_REGISTERED_ID.equals(registerId)) {
+			if (!ConstantData.GCM_REGISTERED_ID.equals("") && !ConstantData.GCM_REGISTERED_ID.equals(registerId)) {
 				ConstantData.GCM_REGISTERED_ID = "";
+			} else {
+				ConstantData.GCM_REGISTERED_ID = registerId;
 			}
 
 			if (ConstantData.GCM_REGISTERED_ID.equals("")) {
@@ -109,7 +110,7 @@ public class SplashActivity extends Activity {
 								Thread.sleep(500);
 							}
 
-							Log.i("Join8 GCM SenderId", ConstantData.GCM_REGISTERED_ID);
+							Log.i("Tapp GCM SenderId", ConstantData.GCM_REGISTERED_ID);
 
 							Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
 							startActivity(intent);
@@ -122,7 +123,7 @@ public class SplashActivity extends Activity {
 				}).start();
 
 			} else {
-				Log.i("Join8 GCM SenderId", ConstantData.GCM_REGISTERED_ID);
+				Log.i("Tapp GCM SenderId", ConstantData.GCM_REGISTERED_ID);
 			}
 
 		} catch (Exception e) {

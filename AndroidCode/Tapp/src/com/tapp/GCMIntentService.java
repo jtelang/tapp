@@ -1,4 +1,4 @@
-package com.tapp.service;
+package com.tapp;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -6,29 +6,22 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Random;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
-import com.tapp.R;
 import com.tapp.data.ConstantData;
 
 public class GCMIntentService extends GCMBaseIntentService {
 
-	private static final String TAG = "RCC-GCM";
+	private static final String TAG = "Tapp-GCM - Main";
 
 	public GCMIntentService() {
 		super(ConstantData.SENDER_ID);
@@ -43,7 +36,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 
 		ConstantData.GCM_REGISTERED_ID = registrationId;
 
-		registerGCMToken();
+//		registerGCMToken();
 	}
 
 	/**
@@ -61,35 +54,33 @@ public class GCMIntentService extends GCMBaseIntentService {
 	@Override
 	protected void onMessage(Context context, Intent intent) {
 		Log.i(TAG, "Received message");
-		
-		Log.i(TAG, "Received message");
 		Log.i(TAG, "intent" + intent.getDataString() + "\n" + intent.toString());
-
 
 		String data = intent.getExtras().getString("data");
 		Log.e("Notification Message", data);
 
-//		int totalCount = 0;
-//		String[] str = data.split(",");
-//
-//		SharedPreferences sharedPref = getSharedPreferences(ConstantData.SHARED_PREF_NAME, MODE_PRIVATE);
-//		Editor editor = sharedPref.edit();
-//
-//		for (int i = 0; i < str.length; i++) {
-//
-//			String[] temp = str[i].split("#");
-//
-//			int count = Integer.parseInt(temp[1]);
-//			totalCount += count;
-//
-//			editor.putInt(temp[0], count);
-//		}
-//
-//		editor.commit();
-//
-//		if (totalCount > 0) {
-//			generateNotification(context, totalCount);
-//		}
+		// int totalCount = 0;
+		// String[] str = data.split(",");
+		//
+		// SharedPreferences sharedPref =
+		// getSharedPreferences(ConstantData.SHARED_PREF_NAME, MODE_PRIVATE);
+		// Editor editor = sharedPref.edit();
+		//
+		// for (int i = 0; i < str.length; i++) {
+		//
+		// String[] temp = str[i].split("#");
+		//
+		// int count = Integer.parseInt(temp[1]);
+		// totalCount += count;
+		//
+		// editor.putInt(temp[0], count);
+		// }
+		//
+		// editor.commit();
+		//
+		// if (totalCount > 0) {
+		// generateNotification(context, totalCount);
+		// }
 	}
 
 	/**
@@ -122,28 +113,32 @@ public class GCMIntentService extends GCMBaseIntentService {
 	 */
 	private static void generateNotification(Context context, int totalCount) {
 
-//		String title = context.getString(R.string.app_name);
-//
-//		Intent notificationIntent = new Intent(context, HomeScreen.class);
-//		// set intent so it does not start a new activity
-//		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//
-//		// notificationIntent.putExtra("isFromNotification", true);
-//		notificationIntent.putExtra("redirectTo", redirectTo);
-//		notificationIntent.putExtra("reference", reference);
-//
-//		NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-//		PendingIntent contentIntent = PendingIntent.getActivity(context, new Random().nextInt(), notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-//		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context).setSmallIcon(R.drawable.ic_launcher).setContentTitle(title).setStyle(new NotificationCompat.BigTextStyle().bigText(message)).setContentText(message);
-//		mBuilder.setContentIntent(contentIntent);
-//		mBuilder.setAutoCancel(true);
-//		Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-//		mBuilder.setSound(alarmSound);
-//		mBuilder.setVibrate(new long[]{1000, 1000});
-//		mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+		// String title = context.getString(R.string.app_name);
+		//
+		// Intent notificationIntent = new Intent(context, HomeScreen.class);
+		// // set intent so it does not start a new activity
+		// notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		//
+		// // notificationIntent.putExtra("isFromNotification", true);
+		// notificationIntent.putExtra("redirectTo", redirectTo);
+		// notificationIntent.putExtra("reference", reference);
+		//
+		// NotificationManager mNotificationManager = (NotificationManager)
+		// context.getSystemService(Context.NOTIFICATION_SERVICE);
+		// PendingIntent contentIntent = PendingIntent.getActivity(context, new
+		// Random().nextInt(), notificationIntent,
+		// PendingIntent.FLAG_CANCEL_CURRENT);
+		// NotificationCompat.Builder mBuilder = new
+		// NotificationCompat.Builder(context).setSmallIcon(R.drawable.ic_launcher).setContentTitle(title).setStyle(new
+		// NotificationCompat.BigTextStyle().bigText(message)).setContentText(message);
+		// mBuilder.setContentIntent(contentIntent);
+		// mBuilder.setAutoCancel(true);
+		// Uri alarmSound =
+		// RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+		// mBuilder.setSound(alarmSound);
+		// mBuilder.setVibrate(new long[]{1000, 1000});
+		// mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
 
-		
-		
 		// int icon = R.drawable.ic_drawer;
 		// String message = "You have " + totalCount +
 		// " new updates for RCC App";

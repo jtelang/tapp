@@ -11,6 +11,6 @@ public final class Manifest {
     public static final class permission {
         /**  GCM Requirements 
          */
-        public static final String C2D_MESSAGE="com.collegeapp.permission.C2D_MESSAGE";
+        public static final String C2D_MESSAGE="com.tapp.permission.C2D_MESSAGE";
     }
 }
