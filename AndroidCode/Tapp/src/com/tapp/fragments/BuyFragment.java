@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.tapp.BuyActivity;
+import com.tapp.MusicActivity;
 import com.tapp.R;
 import com.tapp.base.BaseFragment;
 
@@ -50,7 +51,7 @@ public class BuyFragment extends BaseFragment implements OnClickListener {
 
 			case R.id.btnMusic :
 
-				Intent intent = new Intent(getActivity(), BuyActivity.class);
+				Intent intent = new Intent(getActivity(), MusicActivity.class);
 				startActivity(intent);
 				break;
 
