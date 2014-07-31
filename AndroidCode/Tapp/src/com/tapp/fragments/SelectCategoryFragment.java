@@ -13,7 +13,7 @@ import com.tapp.MusicActivity;
 import com.tapp.R;
 import com.tapp.base.BaseFragment;
 
-public class BuyFragment extends BaseFragment implements OnClickListener {
+public class SelectCategoryFragment extends BaseFragment implements OnClickListener {
 
 	private View view = null;
 	private Button btnMusic = null, btnGames = null;
@@ -25,7 +25,7 @@ public class BuyFragment extends BaseFragment implements OnClickListener {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		view = inflater.inflate(R.layout.fragment_buy, null);
+		view = inflater.inflate(R.layout.fragment_select_category, null);
 
 		btnMusic = (Button) view.findViewById(R.id.btnMusic);
 		btnGames = (Button) view.findViewById(R.id.btnGames);
@@ -57,8 +57,8 @@ public class BuyFragment extends BaseFragment implements OnClickListener {
 
 			case R.id.btnGames :
 
-				intent = new Intent(getActivity(), BuyActivity.class);
-				startActivity(intent);
+//				intent = new Intent(getActivity(), BuyActivity.class);
+//				startActivity(intent);
 				break;
 		}
 	}

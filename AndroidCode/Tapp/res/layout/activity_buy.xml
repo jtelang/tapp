@@ -66,24 +66,25 @@
 
             <RadioButton
                 android:id="@+id/radio0"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="33"
                 android:checked="true"
                 android:text="@string/maestro" />
 
             <RadioButton
                 android:id="@+id/radio1"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="27"
+                android:gravity="center"
                 android:text="@string/visa" />
 
             <RadioButton
                 android:id="@+id/radio2"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="40"
                 android:text="@string/mastercard" />
         </RadioGroup>
 

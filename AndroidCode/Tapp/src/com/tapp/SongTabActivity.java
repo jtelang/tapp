@@ -19,9 +19,8 @@ import com.tapp.fragments.SongsFragment;
 
 public class SongTabActivity extends ActionBarActivity implements ActionBar.TabListener {
 
-	SectionsPagerAdapter mSectionsPagerAdapter;
-
-	ViewPager mViewPager;
+	private SectionsPagerAdapter mSectionsPagerAdapter = null;
+	private ViewPager mViewPager = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +59,25 @@ public class SongTabActivity extends ActionBarActivity implements ActionBar.TabL
 			// this tab is selected.
 			actionBar.addTab(actionBar.newTab().setText(mSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
 		}
+
+		String selectedTab = getIntent().getStringExtra("tab");
+		
+		if(selectedTab.equalsIgnoreCase("genres")){
+			actionBar.getTabAt(0).select();
+		}else if(selectedTab.equalsIgnoreCase("artist")){
+			actionBar.getTabAt(1).select();
+		}else if(selectedTab.equalsIgnoreCase("album")){
+			actionBar.getTabAt(2).select();
+		}else if(selectedTab.equalsIgnoreCase("songs")){
+			actionBar.getTabAt(3).select();
+		}
 	}
 
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		getMenuInflater().inflate(R.menu.menu_search, menu);
-//		return true;
-//	}
+	// @Override
+	// public boolean onCreateOptionsMenu(Menu menu) {
+	// getMenuInflater().inflate(R.menu.menu_search, menu);
+	// return true;
+	// }
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

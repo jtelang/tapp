@@ -117,7 +117,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 	 */
 	private static void generateNotification(Context context, String message) {
 
-		String title = context.getString(R.string.app_name);
+		String title = context.getString(R.string.app_name)+ " Notification";
 
 		Intent notificationIntent = new Intent(context, SplashActivity.class);
 		// set intent so it does not start a new activity

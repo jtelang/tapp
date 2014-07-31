@@ -1003,7 +1003,7 @@ containing a value of this type.
         public static final int ic_menu_invite=0x7f02005c;
     }
     public static final class id {
-        public static final int action_add_me=0x7f050079;
+        public static final int action_add_me=0x7f05007d;
         public static final int action_bar=0x7f05001c;
         public static final int action_bar_activity_content=0x7f050015;
         public static final int action_bar_container=0x7f05001b;
@@ -1015,13 +1015,13 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f050016;
         public static final int action_menu_presenter=0x7f050017;
         public static final int action_mode_close_button=0x7f050024;
-        public static final int action_my_credits=0x7f050077;
-        public static final int action_search=0x7f050078;
-        public static final int action_settings=0x7f050076;
+        public static final int action_my_credits=0x7f05007b;
+        public static final int action_search=0x7f05007c;
+        public static final int action_settings=0x7f05007a;
         public static final int activity_chooser_view_content=0x7f050025;
         public static final int always=0x7f05000b;
         public static final int beginning=0x7f050011;
-        public static final int btnAlbumb=0x7f050057;
+        public static final int btnAlbum=0x7f050057;
         public static final int btnArtist=0x7f050056;
         public static final int btnCancel=0x7f05004c;
         public static final int btnGames=0x7f05005b;
@@ -1098,7 +1098,7 @@ containing a value of this type.
         public static final int spnYear=0x7f050048;
         public static final int submit_area=0x7f050039;
         public static final int tabMode=0x7f050002;
-        public static final int text1=0x7f050075;
+        public static final int text1=0x7f050079;
         public static final int textView1=0x7f05003c;
         public static final int textView2=0x7f05003e;
         public static final int textView3=0x7f050040;
@@ -1108,18 +1108,22 @@ containing a value of this type.
         public static final int title=0x7f05002b;
         public static final int top_action_bar=0x7f050020;
         public static final int txtAge=0x7f050066;
+        public static final int txtAlbumName=0x7f050071;
         public static final int txtBirthday=0x7f050064;
+        public static final int txtBuyFlag=0x7f050077;
         public static final int txtCity=0x7f050068;
-        public static final int txtContactFlag=0x7f050071;
+        public static final int txtContactFlag=0x7f050073;
         public static final int txtCountryCode=0x7f050050;
         public static final int txtEmail=0x7f050063;
         public static final int txtEmptyView=0x7f05006e;
         public static final int txtFollowers=0x7f050069;
         public static final int txtFullName=0x7f050062;
-        public static final int txtName=0x7f050072;
-        public static final int txtOrder=0x7f050073;
-        public static final int txtPrice=0x7f050074;
+        public static final int txtName=0x7f050074;
+        public static final int txtOrder=0x7f050075;
+        public static final int txtPrice=0x7f050076;
         public static final int txtSex=0x7f050065;
+        public static final int txtSingerName=0x7f050072;
+        public static final int txtSongName=0x7f050078;
         public static final int txtStatus=0x7f050061;
         public static final int txtWebpage=0x7f050067;
         public static final int up=0x7f050021;
@@ -1183,18 +1187,20 @@ containing a value of this type.
         public static final int activity_song_tabs=0x7f03001c;
         public static final int activity_splash=0x7f03001d;
         public static final int activity_view_profile=0x7f03001e;
-        public static final int fragment_albumb=0x7f03001f;
+        public static final int fragment_album=0x7f03001f;
         public static final int fragment_artist=0x7f030020;
-        public static final int fragment_buy=0x7f030021;
-        public static final int fragment_friend_list=0x7f030022;
-        public static final int fragment_genres=0x7f030023;
-        public static final int fragment_navigation_drawer=0x7f030024;
-        public static final int fragment_progress=0x7f030025;
+        public static final int fragment_friend_list=0x7f030021;
+        public static final int fragment_genres=0x7f030022;
+        public static final int fragment_navigation_drawer=0x7f030023;
+        public static final int fragment_progress=0x7f030024;
+        public static final int fragment_select_category=0x7f030025;
         public static final int fragment_songs=0x7f030026;
-        public static final int row_friend_list=0x7f030027;
-        public static final int row_my_credits=0x7f030028;
-        public static final int row_spinner=0x7f030029;
-        public static final int support_simple_spinner_dropdown_item=0x7f03002a;
+        public static final int row_album_list=0x7f030027;
+        public static final int row_friend_list=0x7f030028;
+        public static final int row_my_credits=0x7f030029;
+        public static final int row_song_list=0x7f03002a;
+        public static final int row_spinner=0x7f03002b;
+        public static final int support_simple_spinner_dropdown_item=0x7f03002c;
     }
     public static final class menu {
         public static final int main=0x7f0d0000;
@@ -1256,6 +1262,7 @@ containing a value of this type.
         public static final int artist=0x7f0a0049;
         public static final int available=0x7f0a002a;
         public static final int birthday=0x7f0a0031;
+        public static final int buy=0x7f0a0050;
         public static final int cancel=0x7f0a0018;
         public static final int card_expiry_date=0x7f0a0041;
         public static final int card_number=0x7f0a0039;
@@ -1298,6 +1305,7 @@ containing a value of this type.
         public static final int no_records_available=0x7f0a0019;
         public static final int number_confirmation=0x7f0a0022;
         public static final int pay=0x7f0a0043;
+        public static final int recommend=0x7f0a0051;
         /**  Song Tab screen 
          */
         public static final int search=0x7f0a0047;

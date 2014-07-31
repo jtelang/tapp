@@ -85,5 +85,7 @@
     <string name="search_artist">Search Artist</string>
     <string name="search_album">Search Album</string>
     <string name="search_songs">Search Songs</string>
+    <string name="buy">Buy</string>
+    <string name="recommend">Recommend</string>
 
 </resources>

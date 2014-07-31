@@ -12,7 +12,7 @@ import android.view.MenuItem;
 
 import com.tapp.data.ConstantData;
 import com.tapp.data.DBHelper;
-import com.tapp.fragments.BuyFragment;
+import com.tapp.fragments.SelectCategoryFragment;
 import com.tapp.fragments.FriendListFragment;
 
 public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -53,22 +53,22 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 		switch (position) {
 
 			case 0 :
-				fragment = new BuyFragment();
+				fragment = new SelectCategoryFragment();
 				break;
 
 			case 1 :
-				fragment = new BuyFragment();
+				fragment = new SelectCategoryFragment();
 				break;
 
 			case 2 :
-				fragment = new BuyFragment();
+				fragment = new SelectCategoryFragment();
 				break;
 			case 3 :
 				fragment = new FriendListFragment();
 				break;
 
 			default :
-				fragment = new BuyFragment();
+				fragment = new SelectCategoryFragment();
 				break;
 		}
 

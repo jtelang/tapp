@@ -33,7 +33,6 @@ public class FriendListFragment extends BaseFragment {
 
 	private View view = null;
 	private ListView listView = null;
-	private TextView txtEmptyView = null;
 
 	private ArrayList<com.tapp.data.ContactData> list = null;
 
@@ -47,7 +46,7 @@ public class FriendListFragment extends BaseFragment {
 		view = inflater.inflate(R.layout.fragment_friend_list, null);
 
 		listView = (ListView) view.findViewById(R.id.listView);
-		txtEmptyView = (TextView) view.findViewById(R.id.txtEmptyView);
+		TextView txtEmptyView = (TextView) view.findViewById(R.id.txtEmptyView);
 		listView.setEmptyView(txtEmptyView);
 
 		listView.setOnItemClickListener(new OnItemClickListener() {

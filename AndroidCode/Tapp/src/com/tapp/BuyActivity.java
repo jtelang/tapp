@@ -4,6 +4,7 @@ import java.util.Calendar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +26,10 @@ public class BuyActivity extends ActionBarActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_buy);
+
+		ActionBar actionBar = getSupportActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setDisplayShowHomeEnabled(true);
 
 		spnMonth = (Spinner) findViewById(R.id.spnMonth);
 		spnYear = (Spinner) findViewById(R.id.spnYear);
@@ -53,7 +58,12 @@ public class BuyActivity extends ActionBarActivity implements OnClickListener {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
-		if (item.getItemId() == R.id.action_my_credits) {
+		if (item.getItemId() == android.R.id.home) {
+			
+			finish();
+			return true;
+
+		} else if (item.getItemId() == R.id.action_my_credits) {
 
 			Intent intent = new Intent(BuyActivity.this, MyCreditsActivity.class);
 			startActivity(intent);

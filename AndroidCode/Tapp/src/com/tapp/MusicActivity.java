@@ -11,7 +11,7 @@ import android.widget.Button;
 
 public class MusicActivity extends ActionBarActivity implements OnClickListener {
 
-	private Button btnGenres = null, btnArtist = null, btnAlbumb = null, btnSongs = null, btnMusic = null, btnGames = null;
+	private Button btnGenres = null, btnArtist = null, btnAlbum = null, btnSongs = null, btnMusic = null, btnGames = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,14 +25,14 @@ public class MusicActivity extends ActionBarActivity implements OnClickListener 
 
 		btnGenres = (Button) findViewById(R.id.btnGenres);
 		btnArtist = (Button) findViewById(R.id.btnArtist);
-		btnAlbumb = (Button) findViewById(R.id.btnAlbumb);
+		btnAlbum = (Button) findViewById(R.id.btnAlbum);
 		btnSongs = (Button) findViewById(R.id.btnSongs);
 		btnMusic = (Button) findViewById(R.id.btnMusic);
 		btnGames = (Button) findViewById(R.id.btnGames);
 
 		btnGenres.setOnClickListener(this);
 		btnArtist.setOnClickListener(this);
-		btnAlbumb.setOnClickListener(this);
+		btnAlbum.setOnClickListener(this);
 		btnSongs.setOnClickListener(this);
 		btnMusic.setOnClickListener(this);
 		btnGames.setOnClickListener(this);
@@ -54,18 +54,22 @@ public class MusicActivity extends ActionBarActivity implements OnClickListener 
 
 			case R.id.btnGenres :
 				Intent intent = new Intent(MusicActivity.this, SongTabActivity.class);
+				intent.putExtra("tab", "genres");
 				startActivity(intent);
 				break;
 			case R.id.btnArtist :
 				intent = new Intent(MusicActivity.this, SongTabActivity.class);
+				intent.putExtra("tab", "artist");
 				startActivity(intent);
 				break;
-			case R.id.btnAlbumb :
+			case R.id.btnAlbum :
 				intent = new Intent(MusicActivity.this, SongTabActivity.class);
+				intent.putExtra("tab", "album");
 				startActivity(intent);
 				break;
 			case R.id.btnSongs :
 				intent = new Intent(MusicActivity.this, SongTabActivity.class);
+				intent.putExtra("tab", "songs");
 				startActivity(intent);
 				break;
 			case R.id.btnMusic :

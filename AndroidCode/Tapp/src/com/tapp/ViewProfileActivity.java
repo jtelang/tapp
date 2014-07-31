@@ -1,24 +1,27 @@
 package com.tapp;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.TextView;
 
 public class ViewProfileActivity extends ActionBarActivity implements OnClickListener {
 
 	private Button btnViewAllFollowers = null;
-	private TextView txtFullName = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_view_profile);
+
+		ActionBar actionBar = getSupportActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setDisplayShowHomeEnabled(true);
 
 		btnViewAllFollowers = (Button) findViewById(R.id.btnViewAllFollowers);
 
@@ -35,7 +38,11 @@ public class ViewProfileActivity extends ActionBarActivity implements OnClickLis
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
-		if (item.getItemId() == R.id.action_settings) {
+		if (item.getItemId() == android.R.id.home) {
+			finish();
+			return true;
+		} else if (item.getItemId() == R.id.action_add_me) {
+			finish();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -46,8 +53,9 @@ public class ViewProfileActivity extends ActionBarActivity implements OnClickLis
 
 		if (view.equals(btnViewAllFollowers)) {
 
-//			Intent intent = new Intent(ViewProfileActivity.this, BuyActivity.class);
-//			startActivity(intent);
+			// Intent intent = new Intent(ViewProfileActivity.this,
+			// BuyActivity.class);
+			// startActivity(intent);
 		}
 	}
 }

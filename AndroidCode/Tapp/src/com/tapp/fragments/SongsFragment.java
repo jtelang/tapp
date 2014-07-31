@@ -1,5 +1,7 @@
 package com.tapp.fragments;
 
+import java.util.ArrayList;
+
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
@@ -12,12 +14,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.tapp.R;
+import com.tapp.adapters.SongListAdapter;
 import com.tapp.base.BaseFragment;
+import com.tapp.data.AlbumData;
+import com.tapp.data.SongData;
 import com.tapp.utils.KeyboardUtils;
+import com.tapp.utils.Log;
 
 public class SongsFragment extends BaseFragment {
 
@@ -25,11 +32,14 @@ public class SongsFragment extends BaseFragment {
 
 	private View view = null;
 	private SearchView mSearchView = null;
+	private ListView listView = null;
+
+	private ArrayList<SongData> listSongData = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setHasOptionsMenu(true);
 	}
 
@@ -37,6 +47,10 @@ public class SongsFragment extends BaseFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		view = inflater.inflate(R.layout.fragment_songs, null);
+
+		listView = (ListView) view.findViewById(R.id.listView);
+		TextView txtEmptyView = (TextView) view.findViewById(R.id.txtEmptyView);
+		listView.setEmptyView(txtEmptyView);
 
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
@@ -46,7 +60,24 @@ public class SongsFragment extends BaseFragment {
 		super.onActivityCreated(savedInstanceState);
 
 		setContentView(view);
-		setContentShown(true);
+		setContentShown(false);
+
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+
+				getSongList();
+
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+
+						listView.setAdapter(new SongListAdapter(getActivity(), listSongData));
+						setContentShown(true);
+					}
+				});
+			}
+		}).start();
 	}
 
 	@Override
@@ -80,5 +111,23 @@ public class SongsFragment extends BaseFragment {
 				return false;
 			}
 		});
+	}
+
+	private void getSongList() {
+
+		try {
+
+			listSongData = new ArrayList<SongData>();
+
+			listSongData.add(new SongData("For Emma, Forever Ago", "Bon lver", 0));
+			listSongData.add(new SongData("Mer De Noms", "A Perfect Circle", 1));
+			listSongData.add(new SongData("Narrow Stairs", "Death Cab For Cutie", 0));
+			listSongData.add(new SongData("For Emma, Forever Ago", "Bon lver", 1));
+			listSongData.add(new SongData("Mer De Noms", "A Perfect Circle", 0));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.e(TAG, "Error in displayAlbumList : " + e.toString());
+		}
 	}
 }
