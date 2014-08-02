@@ -25,6 +25,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.tapp.R;
+import com.tapp.views.MyProgressDialog;
 
 /**
  * The implementation of the fragment to display content. Based on
@@ -42,6 +43,8 @@ public class BaseFragment extends Fragment {
 	private View mEmptyView;
 	private boolean mContentShown;
 	private boolean mIsContentEmpty;
+
+	private MyProgressDialog progressDialog = null;
 
 	public BaseFragment() {
 	}
@@ -312,4 +315,28 @@ public class BaseFragment extends Fragment {
 		}
 	}
 
+	protected void displayProgressDialog() {
+
+		progressDialog = new MyProgressDialog(getActivity());
+	}
+
+	protected void dissmissProgressDialog() {
+
+		if (progressDialog != null && progressDialog.isShowing()) {
+			progressDialog.dismiss();
+		}
+	}
+
+	protected void dissmissProgressDialogOnUIThread() {
+
+		getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+
+				if (progressDialog != null && progressDialog.isShowing()) {
+					progressDialog.dismiss();
+				}
+			}
+		});
+	}
 }

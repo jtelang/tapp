@@ -60,23 +60,24 @@ public class SplashActivity extends Activity {
 			// }
 			//
 
-			if (TappContactService.getInstance() == null) {
-				Intent intent = new Intent(SplashActivity.this, TappContactService.class);
-				startService(intent);
-			}
-
-			// new Handler().postDelayed(new Runnable() {
-			// public void run() {
-			//
-			// Intent i = new Intent(SplashActivity.this, LoginActivity.class);
-			// startActivity(i);
-			// finish();
+			// if (TappContactService.getInstance() == null) {
+			// Intent intent = new Intent(SplashActivity.this,
+			// TappContactService.class);
+			// startService(intent);
 			// }
-			// }, SPLASH_DISPLAY_LENGHT);
 
-			if (ConnectivityTools.isNetworkAvailable(SplashActivity.this)) {
-				getRegisterIDForGCM();
-			}
+			new Handler().postDelayed(new Runnable() {
+				public void run() {
+
+					Intent i = new Intent(SplashActivity.this, LoginActivity.class);
+					startActivity(i);
+					finish();
+				}
+			}, SPLASH_DISPLAY_LENGHT);
+
+			// if (ConnectivityTools.isNetworkAvailable(SplashActivity.this)) {
+			// getRegisterIDForGCM();
+			// }
 
 		} catch (Exception e) {
 			e.printStackTrace();

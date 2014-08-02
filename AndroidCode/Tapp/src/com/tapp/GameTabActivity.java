@@ -14,10 +14,12 @@ import android.view.MenuItem;
 
 import com.tapp.fragments.AlbumFragment;
 import com.tapp.fragments.ArtistFragment;
+import com.tapp.fragments.GameCategoryFragment;
+import com.tapp.fragments.GamesTabCatFragment;
 import com.tapp.fragments.GenresFragment;
 import com.tapp.fragments.SongsFragment;
 
-public class SongTabActivity extends ActionBarActivity implements ActionBar.TabListener {
+public class GameTabActivity extends ActionBarActivity implements ActionBar.TabListener {
 
 	private SectionsPagerAdapter mSectionsPagerAdapter = null;
 	private ViewPager mViewPager = null;
@@ -25,13 +27,15 @@ public class SongTabActivity extends ActionBarActivity implements ActionBar.TabL
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_song_tabs);
+		setContentView(R.layout.activity_tabs);
 
 		// Set up the action bar.
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setDisplayShowHomeEnabled(true);
+
+		actionBar.setTitle(getIntent().getStringExtra("title"));
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the activity.
@@ -60,17 +64,6 @@ public class SongTabActivity extends ActionBarActivity implements ActionBar.TabL
 			actionBar.addTab(actionBar.newTab().setText(mSectionsPagerAdapter.getPageTitle(i)).setTabListener(this));
 		}
 
-		String selectedTab = getIntent().getStringExtra("tab");
-		
-		if(selectedTab.equalsIgnoreCase("genres")){
-			actionBar.getTabAt(0).select();
-		}else if(selectedTab.equalsIgnoreCase("artist")){
-			actionBar.getTabAt(1).select();
-		}else if(selectedTab.equalsIgnoreCase("album")){
-			actionBar.getTabAt(2).select();
-		}else if(selectedTab.equalsIgnoreCase("songs")){
-			actionBar.getTabAt(3).select();
-		}
 	}
 
 	// @Override
@@ -124,13 +117,13 @@ public class SongTabActivity extends ActionBarActivity implements ActionBar.TabL
 			// below).
 			switch (position) {
 				case 0 :
-					return new GenresFragment();
+					return new GamesTabCatFragment();
 				case 1 :
-					return new ArtistFragment();
+					return new GamesTabCatFragment();
 				case 2 :
-					return new AlbumFragment();
+					return new GamesTabCatFragment();
 				case 3 :
-					return new SongsFragment();
+					return new GamesTabCatFragment();
 			}
 			return null;
 		}
@@ -145,13 +138,13 @@ public class SongTabActivity extends ActionBarActivity implements ActionBar.TabL
 			Locale locale = Locale.getDefault();
 			switch (position) {
 				case 0 :
-					return getString(R.string.genres).toUpperCase(locale);
+					return getString(R.string.all_games).toUpperCase(locale);
 				case 1 :
-					return getString(R.string.artist).toUpperCase(locale);
+					return getString(R.string.new_games).toUpperCase(locale);
 				case 2 :
-					return getString(R.string.album).toUpperCase(locale);
+					return getString(R.string.popular_games).toUpperCase(locale);
 				case 3 :
-					return getString(R.string.songs).toUpperCase(locale);
+					return getString(R.string.free_games).toUpperCase(locale);
 			}
 			return null;
 		}

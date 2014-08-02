@@ -21,7 +21,6 @@ import android.widget.TextView.OnEditorActionListener;
 import com.tapp.R;
 import com.tapp.adapters.SongListAdapter;
 import com.tapp.base.BaseFragment;
-import com.tapp.data.AlbumData;
 import com.tapp.data.SongData;
 import com.tapp.utils.KeyboardUtils;
 import com.tapp.utils.Log;
@@ -46,7 +45,7 @@ public class SongsFragment extends BaseFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		view = inflater.inflate(R.layout.fragment_songs, null);
+		view = inflater.inflate(R.layout.fragment_list, null);
 
 		listView = (ListView) view.findViewById(R.id.listView);
 		TextView txtEmptyView = (TextView) view.findViewById(R.id.txtEmptyView);

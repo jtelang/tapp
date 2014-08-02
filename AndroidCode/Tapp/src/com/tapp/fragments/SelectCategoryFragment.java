@@ -8,8 +8,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.tapp.BuyActivity;
-import com.tapp.MusicActivity;
+import com.tapp.CategoryActivity;
 import com.tapp.R;
 import com.tapp.base.BaseFragment;
 
@@ -51,14 +50,16 @@ public class SelectCategoryFragment extends BaseFragment implements OnClickListe
 
 			case R.id.btnMusic :
 
-				Intent intent = new Intent(getActivity(), MusicActivity.class);
+				Intent intent = new Intent(getActivity(), CategoryActivity.class);
+				intent.putExtra("category", "music");
 				startActivity(intent);
 				break;
 
 			case R.id.btnGames :
 
-//				intent = new Intent(getActivity(), BuyActivity.class);
-//				startActivity(intent);
+				intent = new Intent(getActivity(), CategoryActivity.class);
+				intent.putExtra("category", "games");
+				startActivity(intent);
 				break;
 		}
 	}

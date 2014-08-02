@@ -45,7 +45,7 @@ public class GenresFragment extends BaseFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		view = inflater.inflate(R.layout.fragment_genres, null);
+		view = inflater.inflate(R.layout.fragment_list, null);
 
 		listView = (ListView) view.findViewById(R.id.listView);
 		TextView txtEmptyView = (TextView) view.findViewById(R.id.txtEmptyView);
