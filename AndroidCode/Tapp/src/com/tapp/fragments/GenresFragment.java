@@ -1,7 +1,12 @@
 package com.tapp.fragments;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
@@ -13,19 +18,28 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
+import com.tapp.AlbumFilteredActivity;
 import com.tapp.R;
-import com.tapp.adapters.AlbumListAdapter;
+import com.tapp.adapters.IdNameListAdapter;
 import com.tapp.base.BaseFragment;
-import com.tapp.data.AlbumData;
+import com.tapp.data.IdNameData;
+import com.tapp.network.NetworManager;
+import com.tapp.network.RequestListener;
+import com.tapp.network.RequestMethod;
+import com.tapp.request.TappRequestBuilder;
 import com.tapp.utils.KeyboardUtils;
 import com.tapp.utils.Log;
+import com.tapp.utils.Toast;
+import com.tapp.utils.Utils;
 
-public class GenresFragment extends BaseFragment {
+public class GenresFragment extends BaseFragment implements RequestListener {
 
 	private static String TAG = GenresFragment.class.getName();
 
@@ -33,13 +47,18 @@ public class GenresFragment extends BaseFragment {
 	private SearchView mSearchView = null;
 	private ListView listView = null;
 
-	private ArrayList<AlbumData> listGenresData = null;
+	private NetworManager networManager = null;
+	private int genresRequestId = -1;
+
+	private ArrayList<IdNameData> listGenresData = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setHasOptionsMenu(true);
+
+		networManager = NetworManager.getInstance();
 	}
 
 	@Override
@@ -51,6 +70,17 @@ public class GenresFragment extends BaseFragment {
 		TextView txtEmptyView = (TextView) view.findViewById(R.id.txtEmptyView);
 		listView.setEmptyView(txtEmptyView);
 
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+
+				Intent intent = new Intent(getActivity(), AlbumFilteredActivity.class);
+				intent.putExtra("id", listGenresData.get(position).getId());
+				intent.putExtra("title", listGenresData.get(position).getName());
+				startActivity(intent);
+			}
+		});
+
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 
@@ -61,22 +91,19 @@ public class GenresFragment extends BaseFragment {
 		setContentView(view);
 		setContentShown(false);
 
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
+		downloadGenresMusic();
+	}
 
-				getGenresList();
+	@Override
+	public void onResume() {
+		super.onResume();
+		networManager.addListener(this);
+	}
 
-				getActivity().runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-
-						listView.setAdapter(new AlbumListAdapter(getActivity(), listGenresData));
-						setContentShown(true);
-					}
-				});
-			}
-		}).start();
+	@Override
+	public void onStop() {
+		super.onStop();
+		networManager.removeListeners(this);
 	}
 
 	@Override
@@ -112,19 +139,47 @@ public class GenresFragment extends BaseFragment {
 		});
 	}
 
-	private void getGenresList() {
+	private void downloadGenresMusic() {
+
+		networManager.isProgressVisible(false);
+		genresRequestId = networManager.addRequest(new HashMap<String, String>(), RequestMethod.GET, getActivity(), TappRequestBuilder.WS_GENRES);
+	}
+
+	@Override
+	public void onSuccess(int id, String response) {
 
 		try {
+			if (!Utils.isEmpty(response)) {
 
-			listGenresData = new ArrayList<AlbumData>();
+				if (id == genresRequestId) {
 
-			listGenresData.add(new AlbumData("For Emma, Forever Ago", "Bon lver", ""));
-			listGenresData.add(new AlbumData("Mer De Noms", "A Perfect Circle", ""));
-			listGenresData.add(new AlbumData("Narrow Stairs", "Death Cab For Cutie", ""));
+					listGenresData = new ArrayList<IdNameData>();
+					JSONArray jArrayResult = new JSONArray(response);
 
+					for (int i = 0; i < jArrayResult.length(); i++) {
+
+						JSONObject jObj = jArrayResult.getJSONObject(i);
+						listGenresData.add(new IdNameData(jObj.getInt("id"), jObj.getString("genre")));
+					}
+
+					listView.setAdapter(new IdNameListAdapter(getActivity(), listGenresData));
+
+				}
+
+			} else {
+
+//				Toast.displayText(getActivity(), R.string.invalid_server_response);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			Log.e(TAG, "Error in displayAlbumList : " + e.toString());
+			Log.e(TAG, "Error in onSuccess : " + e.toString());
+		} finally {
+			setContentShown(true);
 		}
+	}
+	@Override
+	public void onError(int id, String message) {
+		Toast.displayError(getActivity(), message);
+		setContentShown(true);
 	}
 }

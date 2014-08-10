@@ -86,7 +86,7 @@ public class SongsFragment extends BaseFragment {
 		inflater.inflate(R.menu.menu_search, menu);
 		MenuItem searchItem = menu.findItem(R.id.action_search);
 		mSearchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-		mSearchView.setQueryHint(getString(R.string.search_songs));
+		mSearchView.setQueryHint(getString(R.string.search_song));
 
 		final AutoCompleteTextView edtSearch = (AutoCompleteTextView) mSearchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
 

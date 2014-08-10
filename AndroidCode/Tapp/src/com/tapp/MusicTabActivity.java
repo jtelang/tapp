@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import com.tapp.fragments.AlbumFragment;
 import com.tapp.fragments.ArtistFragment;
 import com.tapp.fragments.GenresFragment;
-import com.tapp.fragments.SongsFragment;
 
 public class MusicTabActivity extends ActionBarActivity implements ActionBar.TabListener {
 
@@ -61,15 +60,13 @@ public class MusicTabActivity extends ActionBarActivity implements ActionBar.Tab
 		}
 
 		String selectedTab = getIntent().getStringExtra("tab");
-		
-		if(selectedTab.equalsIgnoreCase("genres")){
+
+		if (selectedTab.equalsIgnoreCase("genres")) {
 			actionBar.getTabAt(0).select();
-		}else if(selectedTab.equalsIgnoreCase("artist")){
+		} else if (selectedTab.equalsIgnoreCase("artist")) {
 			actionBar.getTabAt(1).select();
-		}else if(selectedTab.equalsIgnoreCase("album")){
+		} else if (selectedTab.equalsIgnoreCase("album")) {
 			actionBar.getTabAt(2).select();
-		}else if(selectedTab.equalsIgnoreCase("songs")){
-			actionBar.getTabAt(3).select();
 		}
 	}
 
@@ -129,15 +126,13 @@ public class MusicTabActivity extends ActionBarActivity implements ActionBar.Tab
 					return new ArtistFragment();
 				case 2 :
 					return new AlbumFragment();
-				case 3 :
-					return new SongsFragment();
 			}
 			return null;
 		}
 
 		@Override
 		public int getCount() {
-			return 4;
+			return 3;
 		}
 
 		@Override
@@ -150,8 +145,7 @@ public class MusicTabActivity extends ActionBarActivity implements ActionBar.Tab
 					return getString(R.string.artist).toUpperCase(locale);
 				case 2 :
 					return getString(R.string.album).toUpperCase(locale);
-				case 3 :
-					return getString(R.string.songs).toUpperCase(locale);
+
 			}
 			return null;
 		}

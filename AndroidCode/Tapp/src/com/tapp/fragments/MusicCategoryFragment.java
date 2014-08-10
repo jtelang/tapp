@@ -36,7 +36,7 @@ public class MusicCategoryFragment extends BaseFragment implements OnClickListen
 		btnGenres.setOnClickListener(this);
 		btnArtist.setOnClickListener(this);
 		btnAlbum.setOnClickListener(this);
-		btnSongs.setOnClickListener(this);
+//		btnSongs.setOnClickListener(this);
 
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}

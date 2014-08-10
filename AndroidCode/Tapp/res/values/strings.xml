@@ -8,12 +8,15 @@
     <string name="drawer_menu_friend_list">Friend List</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="no_internet">Internet connection is not available.Please try again later</string>
     <string name="loading">Loading&#8230;</string>
     <string name="edit">Edit</string>
     <string name="yes">Yes</string>
     <string name="cancel">Cancel</string>
+    <string name="no_internet">Internet connection is not available. Please try again later</string>
     <string name="no_records_available">No records available</string>
+    <string name="invalid_server_response">Invalid response from server</string>
+    <string name="out_of_memory">Application closed due to insufficient memory</string>
+    <string name="invalid_parameter">Invalid parameter</string>
 
     <!-- Action menu -->
     <string name="action_settings">Settings</string>
@@ -84,8 +87,9 @@
     <string name="search_genres">Search Genres</string>
     <string name="search_artist">Search Artist</string>
     <string name="search_album">Search Album</string>
-    <string name="search_songs">Search Songs</string>
+    <string name="search_song">Search Song</string>
     <string name="recommend">Recommend</string>
+    <string name="select_album">Select Album</string>
 
     <!-- Game Tab screen -->
 
