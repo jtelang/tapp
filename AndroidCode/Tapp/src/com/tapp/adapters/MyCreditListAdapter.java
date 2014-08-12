@@ -46,8 +46,11 @@ public class MyCreditListAdapter extends BaseAdapter {
 			convertView = mInflater.inflate(R.layout.row_my_credits, parent, false);
 			mHolder = new ViewHolder();
 
-			mHolder.txtOrder = (TextView) convertView.findViewById(R.id.txtOrder);
+			mHolder.txtHeader = (TextView) convertView.findViewById(R.id.txtHeader);
+			mHolder.txtPlace = (TextView) convertView.findViewById(R.id.txtPlace);
+			mHolder.txtDate = (TextView) convertView.findViewById(R.id.txtDate);
 			mHolder.txtPrice = (TextView) convertView.findViewById(R.id.txtPrice);
+			mHolder.txtYouEarned = (TextView) convertView.findViewById(R.id.txtYouEarned);
 
 			convertView.setTag(mHolder);
 		} else {
@@ -58,15 +61,16 @@ public class MyCreditListAdapter extends BaseAdapter {
 
 		if (data != null) {
 
-			mHolder.txtOrder.setText("Activation Points for order no. " + data.getOrderNo());
-			mHolder.txtPrice.setText(data.getPrice() + " cents");
 		}
 
 		return convertView;
 	}
 	private static class ViewHolder {
 
-		TextView txtOrder;
+		TextView txtHeader;
+		TextView txtPlace;
+		TextView txtDate;
 		TextView txtPrice;
+		TextView txtYouEarned;
 	}
 }

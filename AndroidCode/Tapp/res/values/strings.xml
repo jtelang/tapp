@@ -2,10 +2,6 @@
 <resources>
 
     <string name="app_name">Tapp</string>
-    <string name="drawer_menu_buy">Buy</string>
-    <string name="drawer_menu_recommend">Recommend</string>
-    <string name="drawer_menu_follow">Follow</string>
-    <string name="drawer_menu_friend_list">Friend List</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="loading">Loading&#8230;</string>
@@ -31,6 +27,7 @@
     <string name="go">GO</string>
     <string name="enter_phone">Please enter your phone number</string>
     <string name="number_confirmation">Number Confirmation</string>
+    <string name="is_your_number"><![CDATA[<b>%s</b><br><br>Is your phone number above correct?]]></string>
 
     <!-- Buy screen -->
     <string name="buy">Buy</string>
@@ -75,8 +72,14 @@
 
     <!-- MyCredits screen -->
     <string name="my_credits">My Credits</string>
+    <string name="available_credits">Available Credits</string>
     <string name="load_more_bucks">Load more bucks in your account</string>
     <string name="activity_update_msg"><h3><b>My Activity</b></h3> updated after every 30 minutes</string>
+    <string name="order_history">Order(s) History</string>
+    <string name="place">Place</string>
+    <string name="date">Date</string>
+    <string name="price">Price</string>
+    <string name="you_earned">You Earned</string>
 
     <!-- Music Tab screen -->
     <string name="search">Search</string>

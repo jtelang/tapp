@@ -1,10 +1,13 @@
 package com.tapp;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.telephony.PhoneNumberUtils;
+import android.text.Html;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -72,9 +75,12 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
 
 				phone = PhoneNumberUtils.formatNumber(phone);
 
-				// phone = Html.fromHtml("<b>" + phone + "</b>").toString();
+				phone = Html.fromHtml(String.format(getString(R.string.is_your_number), phone)).toString();
 
-				DialogHelper.popupMessage(LoginActivity.this, getString(R.string.number_confirmation), phone, getString(R.string.yes), getString(R.string.edit), new DialogInterface.OnClickListener() {
+				AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+				builder.setTitle(getString(R.string.number_confirmation));
+				builder.setMessage(phone);
+				builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 
@@ -82,8 +88,12 @@ public class LoginActivity extends ActionBarActivity implements OnClickListener 
 						startActivity(intent);
 						finish();
 					}
-				}, null, true);
-
+				});
+				builder.setNegativeButton(getString(R.string.edit), null);
+				AlertDialog dialog = builder.show();
+				TextView messageText = (TextView) dialog.findViewById(android.R.id.message);
+				messageText.setGravity(Gravity.CENTER);
+				dialog.show();
 			}
 		}
 	}

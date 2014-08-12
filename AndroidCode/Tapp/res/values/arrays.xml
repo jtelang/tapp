@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string-array name="slider_menu">
+        <item>Search</item>
+        <item>Follow</item>
+        <item>Offers</item>
+        <item>Profile</item>
+        <item>Account</item>
+    </string-array>
     <string-array name="country_name">
         <item>United States</item>
         <item>Australia</item>
