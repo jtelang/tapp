@@ -69,6 +69,7 @@ public class AlbumFilteredActivity extends ActionBarActivity implements RequestL
 
 		getActionBar().setTitle(getIntent().getStringExtra("title"));
 
+		listAlbumData = new ArrayList<IdNameData>();
 		downloadAlbumMusic();
 
 		listView.setOnItemClickListener(new OnItemClickListener() {

@@ -10,15 +10,14 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.tapp.R;
+import com.tapp.data.IdNameData;
 
 public class GameCatGridAdapter extends BaseAdapter {
 
-	private Activity activity = null;
-	private ArrayList<String> list = null;
+	private ArrayList<IdNameData> list = null;
 	private LayoutInflater mInflater = null;
 
-	public GameCatGridAdapter(Activity activity, ArrayList<String> list) {
-		this.activity = activity;
+	public GameCatGridAdapter(Activity activity, ArrayList<IdNameData> list) {
 		this.list = list;
 
 		mInflater = LayoutInflater.from(activity);
@@ -55,11 +54,11 @@ public class GameCatGridAdapter extends BaseAdapter {
 			mHolder = (ViewHolder) convertView.getTag();
 		}
 
-		String data = list.get(position);
+		IdNameData data = list.get(position);
 
 		if (data != null) {
 
-			mHolder.txtName.setText(data);
+			mHolder.txtName.setText(data.getName());
 		}
 
 		return convertView;

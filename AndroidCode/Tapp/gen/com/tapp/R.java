@@ -1101,7 +1101,7 @@ containing a value of this type.
         public static final int ic_menu_invite=0x7f02005c;
     }
     public static final class id {
-        public static final int action_add_me=0x7f050085;
+        public static final int action_add_me=0x7f05008c;
         public static final int action_bar=0x7f05001c;
         public static final int action_bar_activity_content=0x7f050015;
         public static final int action_bar_container=0x7f05001b;
@@ -1113,9 +1113,9 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f050016;
         public static final int action_menu_presenter=0x7f050017;
         public static final int action_mode_close_button=0x7f050024;
-        public static final int action_my_credits=0x7f050083;
-        public static final int action_search=0x7f050084;
-        public static final int action_settings=0x7f050082;
+        public static final int action_my_credits=0x7f05008a;
+        public static final int action_search=0x7f05008b;
+        public static final int action_settings=0x7f050089;
         public static final int activity_chooser_view_content=0x7f050025;
         public static final int always=0x7f05000b;
         public static final int beginning=0x7f050011;
@@ -1163,6 +1163,7 @@ containing a value of this type.
         public static final int lnrDivider=0x7f05005a;
         public static final int lnrDivider1=0x7f05005c;
         public static final int lnrOptionContainer=0x7f050074;
+        public static final int lnrRight=0x7f05007f;
         public static final int middle=0x7f050012;
         public static final int navigation_drawer=0x7f050058;
         public static final int never=0x7f050009;
@@ -1200,7 +1201,7 @@ containing a value of this type.
         public static final int spnYear=0x7f050048;
         public static final int submit_area=0x7f050039;
         public static final int tabMode=0x7f050002;
-        public static final int text1=0x7f050081;
+        public static final int text1=0x7f050088;
         public static final int textView1=0x7f05003c;
         public static final int textView2=0x7f05003e;
         public static final int textView3=0x7f050040;
@@ -1212,24 +1213,30 @@ containing a value of this type.
         public static final int txtAge=0x7f050066;
         public static final int txtAlbumName=0x7f050076;
         public static final int txtBirthday=0x7f050064;
-        public static final int txtBuyFlag=0x7f05007f;
+        public static final int txtBuy=0x7f050085;
+        public static final int txtBuyFlag=0x7f050086;
         public static final int txtCity=0x7f050068;
-        public static final int txtContactFlag=0x7f050078;
+        public static final int txtContactFlag=0x7f050079;
         public static final int txtCountryCode=0x7f050054;
         public static final int txtDate=0x7f05007c;
         public static final int txtEmail=0x7f050063;
         public static final int txtEmptyView=0x7f05006f;
+        public static final int txtExpireDate=0x7f050083;
         public static final int txtFollowers=0x7f050069;
         public static final int txtFullName=0x7f050062;
         public static final int txtHeader=0x7f05007a;
-        public static final int txtName=0x7f050079;
+        public static final int txtName=0x7f050078;
         public static final int txtOrderHistory=0x7f05005b;
         public static final int txtPlace=0x7f05007b;
         public static final int txtPrice=0x7f05007d;
+        public static final int txtReceivedDate=0x7f050082;
+        public static final int txtRecommendedBy=0x7f050081;
+        public static final int txtRetailer=0x7f050084;
         public static final int txtSex=0x7f050065;
         public static final int txtSingerName=0x7f050077;
-        public static final int txtSongName=0x7f050080;
+        public static final int txtSongName=0x7f050087;
         public static final int txtStatus=0x7f050061;
+        public static final int txtTile=0x7f050080;
         public static final int txtWebpage=0x7f050067;
         public static final int txtYouEarned=0x7f05007e;
         public static final int up=0x7f050021;
@@ -1301,13 +1308,15 @@ containing a value of this type.
         public static final int fragment_progress=0x7f030024;
         public static final int fragment_select_category=0x7f030025;
         public static final int row_album_list=0x7f030026;
-        public static final int row_friend_list=0x7f030027;
-        public static final int row_game_category_grid=0x7f030028;
-        public static final int row_id_name_list=0x7f030029;
-        public static final int row_my_credits=0x7f03002a;
-        public static final int row_song_list=0x7f03002b;
-        public static final int row_spinner=0x7f03002c;
-        public static final int support_simple_spinner_dropdown_item=0x7f03002d;
+        public static final int row_followers_list=0x7f030027;
+        public static final int row_friend_list=0x7f030028;
+        public static final int row_game_category_grid=0x7f030029;
+        public static final int row_id_name_list=0x7f03002a;
+        public static final int row_my_credits=0x7f03002b;
+        public static final int row_offer_list=0x7f03002c;
+        public static final int row_song_list=0x7f03002d;
+        public static final int row_spinner=0x7f03002e;
+        public static final int support_simple_spinner_dropdown_item=0x7f03002f;
     }
     public static final class menu {
         public static final int main=0x7f0d0000;
@@ -1394,6 +1403,9 @@ containing a value of this type.
         public static final int enter_credit_card=0x7f0a0038;
         public static final int enter_phone=0x7f0a0020;
         public static final int followers=0x7f0a0036;
+        /**  Followers screen 
+         */
+        public static final int followers_title=0x7f0a005d;
         public static final int free_games=0x7f0a005b;
         public static final int full_name=0x7f0a002f;
         public static final int games=0x7f0a0026;
@@ -1422,6 +1434,11 @@ containing a value of this type.
         public static final int no_internet=0x7f0a0014;
         public static final int no_records_available=0x7f0a0015;
         public static final int number_confirmation=0x7f0a0021;
+        public static final int offer_expire=0x7f0a0061;
+        public static final int offer_received=0x7f0a0060;
+        /**  Offer screen 
+         */
+        public static final int offers=0x7f0a005e;
         public static final int order_history=0x7f0a0048;
         public static final int out_of_memory=0x7f0a0017;
         public static final int pay=0x7f0a0043;
@@ -1432,6 +1449,8 @@ containing a value of this type.
          */
         public static final int profile=0x7f0a002e;
         public static final int recommend=0x7f0a0056;
+        public static final int recommended_by=0x7f0a005f;
+        public static final int retailer=0x7f0a0062;
         /**  Music Tab screen 
          */
         public static final int search=0x7f0a004d;

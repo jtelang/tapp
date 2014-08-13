@@ -91,6 +91,7 @@ public class ArtistFragment extends BaseFragment implements RequestListener {
 		setContentView(view);
 		setContentShown(false);
 
+		listArtistData = new ArrayList<IdNameData>();
 		downloadArtistMusic();
 	}
 

@@ -91,6 +91,7 @@ public class GenresFragment extends BaseFragment implements RequestListener {
 		setContentView(view);
 		setContentShown(false);
 
+		listGenresData = new ArrayList<IdNameData>();
 		downloadGenresMusic();
 	}
 

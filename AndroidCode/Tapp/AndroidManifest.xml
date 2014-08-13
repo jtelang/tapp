@@ -116,6 +116,13 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" >
         </activity>
+        <activity
+            android:name=".FollowersListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/followers_title"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
 
         <receiver
             android:name="com.tapp.service.BroadcastReceiver"

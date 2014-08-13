@@ -2,14 +2,18 @@ package com.tapp.request;
 
 public class TappRequestBuilder implements PARAMS {
 
-	public static final String WS_ALBUMS = "Music/albums.json";
-	public static final String WS_ARTISTS = "Music/artists.json";
-	public static final String WS_GENRES = "Music/genres.json";
-	public static final String WS_SONGS = "Music/songs.json";
+	public static final String WS_ALBUMS = "albums.json";
+	public static final String WS_ARTISTS = "artists.json";
+	public static final String WS_GENRES = "genres.json";
+//	public static final String WS_SONGS = "songs.json";
 
-	public static final String WS_ALBUMS_PARAM = "Music/albums/show/%s.json";
-	public static final String WS_SONGS_PARAM = "Music/songs/show/%s.json";
+	public static final String WS_ALBUMS_PARAM = "albums/show/%s.json";
+	public static final String WS_SONGS_PARAM = "songs/show/%s.json";
 
+	public static final String WS_GAME_TYPE = "gametype.json";
+	
+	public static final String WS_GAME_PARAM = "gamecollection/show/1.json";
+	
 	// public static HashMap<String, String> getLoginRequest(String userName,
 	// String password, String email, int loginType) {
 	//

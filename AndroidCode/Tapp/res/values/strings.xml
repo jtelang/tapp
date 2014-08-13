@@ -101,5 +101,19 @@
     <string name="popular_games">Popular\nGames</string>
     <string name="free_games">FREE\nGames</string>
     <string name="search_games">Search\nGames</string>
+    
+    <!-- Followers screen -->
 
+    <string name="followers_title">Followers</string>
+
+    <!-- Offer screen -->
+
+    <string name="offers">Offers</string>
+    <string name="recommended_by">Recommended by</string>
+    <string name="offer_received">Offer Received:</string>
+    <string name="offer_expire">Offer Expire:</string>
+    <string name="retailer">Retailer:</string>
+    
+    
+    
 </resources>

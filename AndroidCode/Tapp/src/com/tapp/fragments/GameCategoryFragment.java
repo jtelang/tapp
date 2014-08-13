@@ -1,6 +1,10 @@
 package com.tapp.fragments;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,20 +20,32 @@ import com.tapp.GameTabActivity;
 import com.tapp.R;
 import com.tapp.adapters.GameCatGridAdapter;
 import com.tapp.base.BaseFragment;
+import com.tapp.data.IdNameData;
+import com.tapp.network.NetworManager;
+import com.tapp.network.RequestListener;
+import com.tapp.network.RequestMethod;
+import com.tapp.request.TappRequestBuilder;
 import com.tapp.utils.Log;
+import com.tapp.utils.Toast;
+import com.tapp.utils.Utils;
 
-public class GameCategoryFragment extends BaseFragment {
+public class GameCategoryFragment extends BaseFragment implements RequestListener {
 
 	private static String TAG = GameCategoryFragment.class.getName();
 
 	private View view = null;
 	private GridView gridView = null;
 
-	private ArrayList<String> listCategory = null;
+	private NetworManager networManager = null;
+	private int gameCateRequestId = -1;
+
+	private ArrayList<IdNameData> listCategory = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		networManager = NetworManager.getInstance();
 	}
 
 	@Override
@@ -44,12 +60,8 @@ public class GameCategoryFragment extends BaseFragment {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 
-				String title = listCategory.get(position);
-				if (title.contains("(")) {
-					title = title.substring(0, title.lastIndexOf("(")).trim() + " Games";
-				}
 				Intent intent = new Intent(getActivity(), GameTabActivity.class);
-				intent.putExtra("title", title);
+				intent.putExtra("title", listCategory.get(position).getName());
 				startActivity(intent);
 			}
 		});
@@ -64,45 +76,63 @@ public class GameCategoryFragment extends BaseFragment {
 		setContentView(view);
 		setContentShown(false);
 
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-
-				getCategoryList();
-
-				getActivity().runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-
-						gridView.setAdapter(new GameCatGridAdapter(getActivity(), listCategory));
-						setContentShown(true);
-					}
-				});
-			}
-		}).start();
-
+		listCategory = new ArrayList<IdNameData>();
+		downloadGameCategories();
 	}
 
-	private void getCategoryList() {
+	@Override
+	public void onResume() {
+		super.onResume();
+		networManager.addListener(this);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		networManager.removeListeners(this);
+	}
+
+	private void downloadGameCategories() {
+
+		networManager.isProgressVisible(false);
+		gameCateRequestId = networManager.addRequest(new HashMap<String, String>(), RequestMethod.GET, getActivity(), TappRequestBuilder.WS_GAME_TYPE);
+	}
+
+	@Override
+	public void onSuccess(int id, String response) {
 
 		try {
+			if (!Utils.isEmpty(response)) {
 
-			listCategory = new ArrayList<String>();
+				if (id == gameCateRequestId) {
 
-			listCategory.add("Action (408)");
-			listCategory.add("Adventure (48)");
-			listCategory.add("Puzzles (96)");
-			listCategory.add("Sports (19)");
-			listCategory.add("Racing (35)");
-			listCategory.add("Driving (26)");
-			listCategory.add("Games for girls (271)");
-			listCategory.add("Bubble-Shooter (15)");
-			listCategory.add("Board Game (53)");
-			listCategory.add("Painting (15)");
+					listCategory = new ArrayList<IdNameData>();
+					JSONArray jArrayResult = new JSONArray(response);
 
+					for (int i = 0; i < jArrayResult.length(); i++) {
+
+						JSONObject jObj = jArrayResult.getJSONObject(i);
+						listCategory.add(new IdNameData(jObj.getInt("id"), jObj.getString("gametype")));
+					}
+
+					gridView.setAdapter(new GameCatGridAdapter(getActivity(), listCategory));
+				}
+
+			} else {
+
+				// Toast.displayText(getActivity(),
+				// R.string.invalid_server_response);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			Log.e(TAG, "Error in getCategoryList : " + e.toString());
+			Log.e(TAG, "Error in onSuccess : " + e.toString());
+		} finally {
+			setContentShown(true);
 		}
+	}
+	@Override
+	public void onError(int id, String message) {
+		Toast.displayError(getActivity(), message);
+		setContentShown(true);
 	}
 }

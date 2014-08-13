@@ -9,14 +9,14 @@
         android:id="@+id/txtHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/box_border"
-        android:padding="@dimen/margine_normal"
+        android:background="#C6C6C6"
+        android:padding="@dimen/margine_small"
         android:text="Andrew Bought the item you recommended" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/margine_normal" >
+        android:padding="@dimen/margine_small" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -34,7 +34,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/margine_normal" >
+        android:padding="@dimen/margine_small" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/margine_normal" >
+        android:padding="@dimen/margine_small" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -70,7 +70,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/margine_normal" >
+        android:padding="@dimen/margine_small" >
 
         <TextView
             android:layout_width="wrap_content"

@@ -13,7 +13,6 @@ import android.support.v7.widget.SearchView;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
@@ -66,6 +65,7 @@ public class SongListActivity extends ActionBarActivity implements RequestListen
 
 		getActionBar().setTitle(getIntent().getStringExtra("title"));
 
+		listSongData = new ArrayList<IdNameData>();
 		downloadSongs();
 
 	}
