@@ -2,6 +2,7 @@ package com.tapp.views;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.view.View;
 import android.view.Window;
 
 import com.tapp.R;
@@ -31,6 +32,8 @@ public class MyProgressDialog extends Dialog {
 			}
 			super.requestWindowFeature(Window.FEATURE_NO_TITLE);
 			super.setContentView(R.layout.fragment_progress);
+			findViewById(R.id.progress_container).setVisibility(View.VISIBLE);
+
 			// super.addContentView(new ProgressBar(getContext()), new
 			// LayoutParams(LayoutParams.WRAP_CONTENT,
 			// LayoutParams.WRAP_CONTENT));

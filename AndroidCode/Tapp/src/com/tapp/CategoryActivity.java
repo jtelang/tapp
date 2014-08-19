@@ -1,5 +1,6 @@
 package com.tapp;
 
+import android.app.FragmentManager.OnBackStackChangedListener;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -10,6 +11,7 @@ import android.widget.Button;
 
 import com.tapp.fragments.GameCategoryFragment;
 import com.tapp.fragments.MusicCategoryFragment;
+import com.tapp.utils.KeyboardUtils;
 
 public class CategoryActivity extends ActionBarActivity implements OnClickListener {
 
@@ -28,7 +30,7 @@ public class CategoryActivity extends ActionBarActivity implements OnClickListen
 		String cat = getIntent().getStringExtra("category");
 
 		if (cat.equalsIgnoreCase("music")) {
-			
+
 			actionBar.setTitle(getString(R.string.music));
 
 			MusicCategoryFragment fragment = new MusicCategoryFragment();
@@ -37,7 +39,7 @@ public class CategoryActivity extends ActionBarActivity implements OnClickListen
 		} else if (cat.equalsIgnoreCase("games")) {
 
 			actionBar.setTitle(getString(R.string.games));
-			
+
 			GameCategoryFragment fragment = new GameCategoryFragment();
 			getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, fragment).commit();
 		}
@@ -76,4 +78,5 @@ public class CategoryActivity extends ActionBarActivity implements OnClickListen
 				break;
 		}
 	}
+
 }

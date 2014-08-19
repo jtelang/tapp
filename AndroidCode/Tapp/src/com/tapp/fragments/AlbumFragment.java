@@ -17,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnFocusChangeListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -139,6 +140,16 @@ public class AlbumFragment extends BaseFragment implements RequestListener {
 				return false;
 			}
 		});
+
+		edtSearch.setOnFocusChangeListener(new OnFocusChangeListener() {
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+
+				if (!hasFocus) {
+					KeyboardUtils.hideKeyboard(edtSearch);
+				}
+			}
+		});
 	}
 
 	private void downloadAlbumMusic() {
@@ -170,7 +181,8 @@ public class AlbumFragment extends BaseFragment implements RequestListener {
 
 			} else {
 
-//				Toast.displayText(getActivity(), R.string.invalid_server_response);
+				// Toast.displayText(getActivity(),
+				// R.string.invalid_server_response);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

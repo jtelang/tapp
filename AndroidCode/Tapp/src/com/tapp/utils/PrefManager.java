@@ -5,18 +5,18 @@ import android.content.SharedPreferences;
 
 import com.tapp.data.ConstantData;
 
-public class CryptoManager {
+public class PrefManager {
 
-	private static CryptoManager instance = null;
+	private static PrefManager instance = null;
 	private SharedPreferences prefs;
 
-	public static CryptoManager getInstance(Context context) {
+	public static PrefManager getInstance(Context context) {
 		if (instance == null)
-			instance = new CryptoManager(context);
+			instance = new PrefManager(context);
 		return instance;
 	}
 
-	private CryptoManager(Context context) {
+	private PrefManager(Context context) {
 		prefs = new ObscuredSharedPreferences(context, context.getSharedPreferences(ConstantData.SHARED_PREF_NAME, Context.MODE_PRIVATE));
 	}
 

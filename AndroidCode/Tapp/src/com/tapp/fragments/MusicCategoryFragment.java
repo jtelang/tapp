@@ -2,15 +2,18 @@ package com.tapp.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.tapp.CategoryActivity;
 import com.tapp.MusicTabActivity;
 import com.tapp.R;
 import com.tapp.base.BaseFragment;
+import com.tapp.utils.KeyboardUtils;
 
 public class MusicCategoryFragment extends BaseFragment implements OnClickListener {
 
@@ -36,7 +39,7 @@ public class MusicCategoryFragment extends BaseFragment implements OnClickListen
 		btnGenres.setOnClickListener(this);
 		btnArtist.setOnClickListener(this);
 		btnAlbum.setOnClickListener(this);
-//		btnSongs.setOnClickListener(this);
+		// btnSongs.setOnClickListener(this);
 
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}

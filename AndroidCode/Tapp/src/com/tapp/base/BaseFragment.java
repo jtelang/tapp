@@ -25,6 +25,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import com.tapp.R;
+import com.tapp.utils.KeyboardUtils;
 import com.tapp.views.MyProgressDialog;
 
 /**
@@ -338,5 +339,11 @@ public class BaseFragment extends Fragment {
 				}
 			}
 		});
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		KeyboardUtils.hideKeyboard(getActivity().getCurrentFocus());
 	}
 }

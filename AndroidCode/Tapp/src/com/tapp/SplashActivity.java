@@ -10,8 +10,9 @@ import android.util.Log;
 import com.google.android.gcm.GCMRegistrar;
 import com.tapp.data.ConstantData;
 import com.tapp.data.DBHelper;
-import com.tapp.service.TappContactService;
+import com.tapp.request.PARAMS;
 import com.tapp.utils.ConnectivityTools;
+import com.tapp.utils.PrefManager;
 
 public class SplashActivity extends Activity {
 
@@ -49,6 +50,10 @@ public class SplashActivity extends Activity {
 				Log.e("Error in DB open", e.toString());
 			}
 
+			PrefManager prefManager = PrefManager.getInstance(this);
+			ConstantData.USER_ID = prefManager.getPrefs().getString(PARAMS.KEY_USER_ID, "");
+			ConstantData.PHONE_NO = prefManager.getPrefs().getString(PARAMS.KEY_PHONE_NO, "");
+
 			// ConstantData.LOCAL_PATH = "/data/data/" +
 			// getApplication().getPackageName() + "/friend_images/";
 			//
@@ -66,18 +71,25 @@ public class SplashActivity extends Activity {
 			// startService(intent);
 			// }
 
-			new Handler().postDelayed(new Runnable() {
-				public void run() {
-
-					Intent i = new Intent(SplashActivity.this, LoginActivity.class);
-					startActivity(i);
-					finish();
-				}
-			}, SPLASH_DISPLAY_LENGHT);
-
-			// if (ConnectivityTools.isNetworkAvailable(SplashActivity.this)) {
-			// getRegisterIDForGCM();
+			// new Handler().postDelayed(new Runnable() {
+			// public void run() {
+			//
+			// Intent i = new Intent(SplashActivity.this, LoginActivity.class);
+			// startActivity(i);
+			// finish();
 			// }
+			// }, SPLASH_DISPLAY_LENGHT);
+
+			if (ConnectivityTools.isNetworkAvailable(SplashActivity.this)) {
+				getRegisterIDForGCM();
+			} else {
+				new Handler().postDelayed(new Runnable() {
+					public void run() {
+
+						startActivity();
+					}
+				}, SPLASH_DISPLAY_LENGHT);
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -90,13 +102,7 @@ public class SplashActivity extends Activity {
 
 			GCMRegistrar.checkDevice(this);
 			GCMRegistrar.checkManifest(this);
-			String registerId = GCMRegistrar.getRegistrationId(this);
-
-			if (!ConstantData.GCM_REGISTERED_ID.equals("") && !ConstantData.GCM_REGISTERED_ID.equals(registerId)) {
-				ConstantData.GCM_REGISTERED_ID = "";
-			} else {
-				ConstantData.GCM_REGISTERED_ID = registerId;
-			}
+			ConstantData.GCM_REGISTERED_ID = GCMRegistrar.getRegistrationId(this);
 
 			if (ConstantData.GCM_REGISTERED_ID.equals("")) {
 
@@ -113,9 +119,7 @@ public class SplashActivity extends Activity {
 
 							Log.i("Tapp GCM SenderId", ConstantData.GCM_REGISTERED_ID);
 
-							Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-							startActivity(intent);
-							finish();
+							startActivity();
 
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -134,12 +138,25 @@ public class SplashActivity extends Activity {
 
 			new Handler().postDelayed(new Runnable() {
 				public void run() {
-
-					Intent i = new Intent(SplashActivity.this, LoginActivity.class);
-					startActivity(i);
-					finish();
+					startActivity();
 				}
 			}, SPLASH_DISPLAY_LENGHT);
+		}
+	}
+
+	private void startActivity() {
+
+		if (ConstantData.USER_ID.equals("")) {
+
+			Intent i = new Intent(SplashActivity.this, LoginActivity.class);
+			startActivity(i);
+			finish();
+
+		} else {
+
+			Intent i = new Intent(SplashActivity.this, MainActivity.class);
+			startActivity(i);
+			finish();
 		}
 	}
 

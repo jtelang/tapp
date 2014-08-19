@@ -45,7 +45,7 @@ public class NetworkClient extends AsyncTask<HashMap<String, String>, String, Ha
 		try {
 
 			RequestClient client = new RequestClient(ConstantData.SERVER_URL + webserviceName, listener, requestId);
-			client.addHeader("Content-Type", "application/x-www-form-urlencoded");
+			client.addHeader("Content-Type", "application/json");
 			if (request.length > 0) {
 				for (Map.Entry<String, String> entry : request[0].entrySet()) {
 					client.addParam(entry.getKey(), entry.getValue());

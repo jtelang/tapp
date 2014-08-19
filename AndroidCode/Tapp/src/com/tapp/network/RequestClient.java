@@ -9,6 +9,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
@@ -107,12 +108,18 @@ public class RequestClient {
 
 				if (params != null && params.size() > 0) {
 
-					for (int i = 0; i < params.size(); i++) {
+					request.setEntity(new StringEntity(params.get(0).getValue()));
 
-						ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-						nameValuePairs.add(new BasicNameValuePair(params.get(i).getName(), params.get(i).getValue()));
-						request.setEntity(new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8));
-					}
+					// for (int i = 0; i < params.size(); i++) {
+					//
+					// ArrayList<NameValuePair> nameValuePairs = new
+					// ArrayList<NameValuePair>();
+					// nameValuePairs.add(new
+					// BasicNameValuePair(params.get(i).getName(),
+					// params.get(i).getValue()));
+					// request.setEntity(new
+					// UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8));
+					// }
 				}
 
 				HttpParams httpParameters = new BasicHttpParams();

@@ -28,6 +28,7 @@
     <string name="enter_phone">Please enter your phone number</string>
     <string name="number_confirmation">Number Confirmation</string>
     <string name="is_your_number"><![CDATA[<b>%s</b><br><br>Is your phone number above correct?]]></string>
+    <string name="registration_failed">Registration failed</string>
 
     <!-- Buy screen -->
     <string name="buy">Buy</string>
@@ -101,7 +102,7 @@
     <string name="popular_games">Popular\nGames</string>
     <string name="free_games">FREE\nGames</string>
     <string name="search_games">Search\nGames</string>
-    
+
     <!-- Followers screen -->
 
     <string name="followers_title">Followers</string>
@@ -113,7 +114,5 @@
     <string name="offer_received">Offer Received:</string>
     <string name="offer_expire">Offer Expire:</string>
     <string name="retailer">Retailer:</string>
-    
-    
-    
+
 </resources>

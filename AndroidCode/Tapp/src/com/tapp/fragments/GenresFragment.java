@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.R.anim;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
@@ -16,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
@@ -138,6 +140,28 @@ public class GenresFragment extends BaseFragment implements RequestListener {
 				return false;
 			}
 		});
+
+		edtSearch.setOnFocusChangeListener(new OnFocusChangeListener() {
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+
+				if (!hasFocus) {
+					KeyboardUtils.hideKeyboard(edtSearch);
+				}
+			}
+		});
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		int id = item.getItemId();
+		if (id == android.R.id.home) {
+			KeyboardUtils.hideKeyboard(mSearchView);
+			getFragmentManager().popBackStack();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	private void downloadGenresMusic() {
@@ -169,7 +193,8 @@ public class GenresFragment extends BaseFragment implements RequestListener {
 
 			} else {
 
-//				Toast.displayText(getActivity(), R.string.invalid_server_response);
+				// Toast.displayText(getActivity(),
+				// R.string.invalid_server_response);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
