@@ -2,6 +2,7 @@ package com.tapp.fragments;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,17 +29,45 @@ import com.tapp.adapters.FriendListAdapter;
 import com.tapp.base.BaseFragment;
 import com.tapp.data.ConstantData;
 import com.tapp.data.ContactData;
+import com.tapp.network.NetworManager;
+import com.tapp.network.RequestListener;
+import com.tapp.network.RequestMethod;
+import com.tapp.request.TappRequestBuilder;
+import com.tapp.utils.PrefManager;
+import com.tapp.utils.Toast;
+import com.tapp.utils.Utils;
 
-public class FriendListFragment extends BaseFragment {
+public class FriendListFragment extends BaseFragment implements RequestListener {
+
+	private static String TAG = FriendListFragment.class.getName();
 
 	private View view = null;
 	private ListView listView = null;
+
+	private NetworManager networManager = null;
+	private PrefManager prefManager = null;
+	private int genresRequestId = -1;
 
 	private ArrayList<com.tapp.data.ContactData> list = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		networManager = NetworManager.getInstance();
+		prefManager = PrefManager.getInstance(getActivity());
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		networManager.addListener(this);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		networManager.removeListeners(this);
 	}
 
 	@Override
@@ -73,20 +102,12 @@ public class FriendListFragment extends BaseFragment {
 
 				getContactList();
 
-				getActivity().runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-
-						listView.setAdapter(new FriendListAdapter(getActivity(), list));
-						setContentShown(true);
-					}
-				});
 			}
 		}).start();
 
 	}
 
-	private void getContactList() {
+	private void getContactList1() {
 
 		try {
 
@@ -122,7 +143,47 @@ public class FriendListFragment extends BaseFragment {
 		}
 	}
 
-	private void insertContactsToDB() {
+	private void getContactList() {
+
+		try {
+
+			list = new ArrayList<ContactData>();
+
+			if (!ConstantData.DB.isContactExistInDB()) {
+
+				String numbers = insertContactsToDB();
+
+				if (!numbers.equals("")) {
+					syncPhoneNumbers(numbers);
+				}
+
+			} else {
+
+				list = ConstantData.DB.getContactList();
+
+				getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+
+						listView.setAdapter(new FriendListAdapter(getActivity(), list));
+						setContentShown(true);
+					}
+				});
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.e("Error in getContactList", e.toString());
+		} finally {
+			if (ConstantData.DB.isTransactionRunning()) {
+				ConstantData.DB.endTransaction();
+			}
+		}
+	}
+
+	private String insertContactsToDB() {
+
+		String phoneNumbers = "";
 
 		try {
 
@@ -160,6 +221,7 @@ public class FriendListFragment extends BaseFragment {
 							Uri imageUri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, String.valueOf(id));
 
 							ConstantData.DB.insertContact(rawContactId, phoneNo, name, 0, imageUri.toString(), getString(R.string.available));
+							phoneNumbers += "," + phoneNo;
 
 						}
 						pCur.close();
@@ -167,6 +229,10 @@ public class FriendListFragment extends BaseFragment {
 					}
 				}
 				ConstantData.DB.endTransaction();
+
+				if (phoneNumbers.startsWith(",")) {
+					phoneNumbers = phoneNumbers.replaceFirst(",", "");
+				}
 			}
 
 		} catch (Exception e) {
@@ -177,6 +243,8 @@ public class FriendListFragment extends BaseFragment {
 				ConstantData.DB.endTransaction();
 			}
 		}
+
+		return phoneNumbers;
 	}
 	private String getContactType(int type) {
 
@@ -235,4 +303,68 @@ public class FriendListFragment extends BaseFragment {
 			return arg0.getName().compareTo(arg1.getName());
 		}
 	};
+
+	private void syncPhoneNumbers(String phoneNumbers) {
+
+		networManager.isProgressVisible(false);
+		genresRequestId = networManager.addRequest(new HashMap<String, String>(), RequestMethod.GET, getActivity(), TappRequestBuilder.WS_GENRES);
+	}
+
+	@Override
+	public void onSuccess(int id, String response) {
+
+		try {
+			if (!Utils.isEmpty(response)) {
+
+				if (id == genresRequestId) {
+
+					JSONArray jArray = new JSONArray(getString(R.string.temp_json));
+
+					ConstantData.DB.beginTransaction();
+
+					for (int i = 0; i < jArray.length(); i++) {
+
+						JSONObject jObj = jArray.getJSONObject(i);
+
+						ConstantData.DB.updateContactByPhoneNo(jObj.getString("phoneNo"), jObj.getInt("contactTypeFlag"), jObj.getString("photoUrl"), jObj.getString("status"));
+					}
+
+					ConstantData.DB.endTransaction();
+
+					list = ConstantData.DB.getContactList();
+
+					listView.setAdapter(new FriendListAdapter(getActivity(), list));
+
+					// listGenresData = new ArrayList<IdNameData>();
+					// JSONArray jArrayResult = new JSONArray(response);
+					//
+					// for (int i = 0; i < jArrayResult.length(); i++) {
+					//
+					// JSONObject jObj = jArrayResult.getJSONObject(i);
+					// listGenresData.add(new IdNameData(jObj.getInt("id"),
+					// jObj.getString("genre")));
+					// }
+					//
+					// listView.setAdapter(new IdNameListAdapter(getActivity(),
+					// listGenresData));
+
+				}
+
+			} else {
+
+				// Toast.displayText(getActivity(),
+				// R.string.invalid_server_response);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.e(TAG, "Error in onSuccess : " + e.toString());
+		} finally {
+			setContentShown(true);
+		}
+	}
+	@Override
+	public void onError(int id, String message) {
+		Toast.displayError(getActivity(), message);
+		setContentShown(true);
+	}
 }

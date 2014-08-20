@@ -8,16 +8,15 @@ import com.tapp.utils.Log;
 
 public class TappRequestBuilder implements PARAMS {
 
-	public static final String WS_ALBUMS = "albums.json";
-	public static final String WS_ARTISTS = "artists.json";
-	public static final String WS_GENRES = "genres.json";
-	// public static final String WS_SONGS = "songs.json";
-	public static final String WS_ALBUMS_PARAM = "albums/show/%s.json";
-	public static final String WS_SONGS_PARAM = "songs/show/%s.json";
-	public static final String WS_GAME_TYPE = "gametype.json";
-	// public static final String WS_GAME_PARAM = "gamecollection/show/1.json";
-	public static final String WS_REGISTER_USER = "user.json";
-	public static final String WS_GET_PROFILE = "profile.json";
+	public static final String WS_ALBUMS = "albums";
+	public static final String WS_ARTISTS = "artists";
+	public static final String WS_GENRES = "genres";
+	public static final String WS_ALBUMS_PARAM = "albums/show/%s";
+	public static final String WS_SONGS_PARAM = "songs/show/%s";
+	public static final String WS_GAME_TYPE = "gametype";
+	public static final String WS_REGISTER_USER = "user";
+	public static final String WS_GET_PROFILE = "myUsers/show";
+	public static final String WS_MY_FOLLOWERS = "myFollowers/show/%s";
 
 	public static HashMap<String, String> getRegisterUserRequest(String phone) {
 

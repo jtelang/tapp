@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -15,7 +14,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
-import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 import com.tapp.utils.Log;
@@ -123,8 +121,8 @@ public class RequestClient {
 				}
 
 				HttpParams httpParameters = new BasicHttpParams();
-				HttpConnectionParams.setConnectionTimeout(httpParameters, 20000);
-				HttpConnectionParams.setSoTimeout(httpParameters, 30000);
+				HttpConnectionParams.setConnectionTimeout(httpParameters, 10000);
+				HttpConnectionParams.setSoTimeout(httpParameters, 15000);
 
 				HttpClient httpClient = new DefaultHttpClient(httpParameters);
 				HttpResponse httpResponse = httpClient.execute(request);

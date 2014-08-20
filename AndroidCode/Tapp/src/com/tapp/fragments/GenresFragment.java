@@ -64,6 +64,18 @@ public class GenresFragment extends BaseFragment implements RequestListener {
 	}
 
 	@Override
+	public void onResume() {
+		super.onResume();
+		networManager.addListener(this);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		networManager.removeListeners(this);
+	}
+
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		view = inflater.inflate(R.layout.fragment_list, null);
@@ -95,18 +107,6 @@ public class GenresFragment extends BaseFragment implements RequestListener {
 
 		listGenresData = new ArrayList<IdNameData>();
 		downloadGenresMusic();
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-		networManager.addListener(this);
-	}
-
-	@Override
-	public void onStop() {
-		super.onStop();
-		networManager.removeListeners(this);
 	}
 
 	@Override
