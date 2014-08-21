@@ -2,6 +2,7 @@ package com.tapp.fragments;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -16,8 +17,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnFocusChangeListener;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -28,7 +29,8 @@ import android.widget.TextView.OnEditorActionListener;
 
 import com.tapp.R;
 import com.tapp.SongListActivity;
-import com.tapp.adapters.IdNameListAdapter;
+import com.tapp.adapters.AlbumFragmentAdapter;
+import com.tapp.adapters.AlbumFragmentAdapter.OnBuyClickListner;
 import com.tapp.base.BaseFragment;
 import com.tapp.data.IdNameData;
 import com.tapp.network.NetworManager;
@@ -49,7 +51,7 @@ public class AlbumFragment extends BaseFragment implements RequestListener {
 	private ListView listView = null;
 
 	private NetworManager networManager = null;
-	private int albumRequestId = -1;
+	private int albumRequestId = -1, buyAlbumRequestId = -1;
 
 	private ArrayList<IdNameData> listAlbumData = null;
 
@@ -65,7 +67,7 @@ public class AlbumFragment extends BaseFragment implements RequestListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		view = inflater.inflate(R.layout.fragment_list, null);
+		view = inflater.inflate(R.layout.fragment_list, container, false);
 
 		listView = (ListView) view.findViewById(R.id.listView);
 		TextView txtEmptyView = (TextView) view.findViewById(R.id.txtEmptyView);
@@ -152,10 +154,24 @@ public class AlbumFragment extends BaseFragment implements RequestListener {
 		});
 	}
 
+	OnBuyClickListner buyClickListner = new OnBuyClickListner() {
+		@Override
+		public void onBuyClicked(String mediaId, String mediaType, String store) {
+
+			buySongRequest(mediaId, mediaType, store);
+		}
+	};
+
 	private void downloadAlbumMusic() {
 
 		networManager.isProgressVisible(false);
 		albumRequestId = networManager.addRequest(new HashMap<String, String>(), RequestMethod.GET, getActivity(), TappRequestBuilder.WS_ALBUMS);
+	}
+
+	private void buySongRequest(String mediaId, String mediaType, String store) {
+
+		networManager.isProgressVisible(true);
+		buyAlbumRequestId = networManager.addRequest(TappRequestBuilder.getBuyMediaRequest(mediaId, mediaType, store), RequestMethod.POST, getActivity(), TappRequestBuilder.WS_BUY_MEDIA);
 	}
 
 	@Override
@@ -175,8 +191,15 @@ public class AlbumFragment extends BaseFragment implements RequestListener {
 						listAlbumData.add(new IdNameData(jObj.getInt("id"), jObj.getString("title")));
 					}
 
-					listView.setAdapter(new IdNameListAdapter(getActivity(), listAlbumData));
+					listView.setAdapter(new AlbumFragmentAdapter(getActivity(), listAlbumData, buyClickListner));
 
+				} else if (id == buyAlbumRequestId) {
+
+					if (response.toLowerCase(Locale.getDefault()).contains("error")) {
+						Toast.displayText(getActivity(), R.string.buy_error);
+					} else {
+						Toast.displayText(getActivity(), R.string.buy_success);
+					}
 				}
 
 			} else {

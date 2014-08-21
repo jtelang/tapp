@@ -2,6 +2,7 @@ package com.tapp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 import org.json.JSONObject;
 
@@ -17,13 +18,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView.OnEditorActionListener;
 
-import com.tapp.adapters.IdNameListAdapter;
+import com.tapp.adapters.AlbumFilteredAdapter;
 import com.tapp.data.IdNameData;
 import com.tapp.network.NetworManager;
 import com.tapp.network.RequestListener;
@@ -42,7 +43,7 @@ public class AlbumFilteredActivity extends ActionBarActivity implements RequestL
 	private ListView listView = null;
 
 	private NetworManager networManager = null;
-	private int albumRequestId = -1;
+	private int albumRequestId = -1, buyAlbumRequestId = -1;
 
 	private ArrayList<IdNameData> listAlbumData = null;
 	private int genresId = 0;
@@ -146,6 +147,12 @@ public class AlbumFilteredActivity extends ActionBarActivity implements RequestL
 		albumRequestId = networManager.addRequest(new HashMap<String, String>(), RequestMethod.GET, this, String.format(TappRequestBuilder.WS_ALBUMS_PARAM, genresId));
 	}
 
+	public void buySongRequest(String mediaId, String mediaType, String store) {
+
+		networManager.isProgressVisible(true);
+		buyAlbumRequestId = networManager.addRequest(TappRequestBuilder.getBuyMediaRequest(mediaId, mediaType, store), RequestMethod.POST, this, TappRequestBuilder.WS_BUY_MEDIA);
+	}
+
 	@Override
 	public void onSuccess(int id, String response) {
 
@@ -159,16 +166,15 @@ public class AlbumFilteredActivity extends ActionBarActivity implements RequestL
 					JSONObject jObj = new JSONObject(response);
 					listAlbumData.add(new IdNameData(jObj.getInt("id"), jObj.getString("title")));
 
-					// JSONArray jArrayResult = new JSONArray(response);
-					// for (int i = 0; i < jArrayResult.length(); i++) {
-					//
-					// JSONObject jObj = jArrayResult.getJSONObject(i);
-					// listAlbumData.add(new IdNameData(jObj.getInt("id"),
-					// jObj.getString("title")));
-					// }
+					listView.setAdapter(new AlbumFilteredAdapter(this, listAlbumData));
 
-					listView.setAdapter(new IdNameListAdapter(this, listAlbumData));
+				} else if (id == buyAlbumRequestId) {
 
+					if (response.toLowerCase(Locale.getDefault()).contains("error")) {
+						Toast.displayText(this, R.string.buy_error);
+					} else {
+						Toast.displayText(this, R.string.buy_success);
+					}
 				}
 
 			} else {

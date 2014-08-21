@@ -96,7 +96,10 @@ public class RequestClient {
 				break;
 			}
 			case POST : {
+
 				HttpPost request = new HttpPost(url);
+
+				Log.d(TAG, "URL => " + url);
 
 				// add headers
 				for (NameValuePair h : headers) {

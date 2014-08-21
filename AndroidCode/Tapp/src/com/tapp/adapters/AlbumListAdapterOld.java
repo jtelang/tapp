@@ -15,7 +15,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tapp.R;
 import com.tapp.data.AlbumData;
 
-public class AlbumListAdapter extends BaseAdapter {
+public class AlbumListAdapterOld extends BaseAdapter {
 
 	private Activity activity = null;
 	private ArrayList<AlbumData> list = null;
@@ -23,7 +23,7 @@ public class AlbumListAdapter extends BaseAdapter {
 	private ImageLoader imageLoader = null;
 	private DisplayImageOptions options = null;
 
-	public AlbumListAdapter(Activity activity, ArrayList<AlbumData> list) {
+	public AlbumListAdapterOld(Activity activity, ArrayList<AlbumData> list) {
 		this.activity = activity;
 		this.list = list;
 

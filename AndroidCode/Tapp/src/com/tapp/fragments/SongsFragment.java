@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.tapp.R;
-import com.tapp.adapters.SongListAdapter;
+import com.tapp.adapters.SongListAdapterOld;
 import com.tapp.base.BaseFragment;
 import com.tapp.data.SongData;
 import com.tapp.utils.KeyboardUtils;
@@ -71,7 +71,7 @@ public class SongsFragment extends BaseFragment {
 					@Override
 					public void run() {
 
-						listView.setAdapter(new SongListAdapter(getActivity(), listSongData));
+						listView.setAdapter(new SongListAdapterOld(getActivity(), listSongData));
 						setContentShown(true);
 					}
 				});

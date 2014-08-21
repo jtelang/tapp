@@ -2,6 +2,7 @@ package com.tapp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 import org.json.JSONObject;
 
@@ -13,13 +14,14 @@ import android.support.v7.widget.SearchView;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-import com.tapp.adapters.IdNameListAdapter;
+import com.tapp.adapters.SongListAdapter;
 import com.tapp.data.IdNameData;
 import com.tapp.network.NetworManager;
 import com.tapp.network.RequestListener;
@@ -38,7 +40,7 @@ public class SongListActivity extends ActionBarActivity implements RequestListen
 	private ListView listView = null;
 
 	private NetworManager networManager = null;
-	private int albumRequestId = -1;
+	private int downloadSongRequestId = -1, buySongRequestId = -1;
 
 	private ArrayList<IdNameData> listSongData = null;
 	private int artistId = 0;
@@ -66,7 +68,7 @@ public class SongListActivity extends ActionBarActivity implements RequestListen
 		getActionBar().setTitle(getIntent().getStringExtra("title"));
 
 		listSongData = new ArrayList<IdNameData>();
-		downloadSongs();
+		downloadSongsRequest();
 
 	}
 
@@ -125,10 +127,16 @@ public class SongListActivity extends ActionBarActivity implements RequestListen
 		return super.onOptionsItemSelected(item);
 	}
 
-	private void downloadSongs() {
+	private void downloadSongsRequest() {
 
 		networManager.isProgressVisible(true);
-		albumRequestId = networManager.addRequest(new HashMap<String, String>(), RequestMethod.GET, this, String.format(TappRequestBuilder.WS_SONGS_PARAM, artistId));
+		downloadSongRequestId = networManager.addRequest(new HashMap<String, String>(), RequestMethod.GET, this, String.format(TappRequestBuilder.WS_SONGS_PARAM, artistId));
+	}
+
+	public void buySongRequest(String mediaId, String mediaType, String store) {
+
+		networManager.isProgressVisible(true);
+		buySongRequestId = networManager.addRequest(TappRequestBuilder.getBuyMediaRequest(mediaId, mediaType, store), RequestMethod.POST, this, TappRequestBuilder.WS_BUY_MEDIA);
 	}
 
 	@Override
@@ -137,23 +145,22 @@ public class SongListActivity extends ActionBarActivity implements RequestListen
 		try {
 			if (!Utils.isEmpty(response)) {
 
-				if (id == albumRequestId) {
+				if (id == downloadSongRequestId) {
 
 					listSongData = new ArrayList<IdNameData>();
 
 					JSONObject jObj = new JSONObject(response);
 					listSongData.add(new IdNameData(jObj.getInt("id"), jObj.getString("title")));
 
-					// JSONArray jArrayResult = new JSONArray(response);
-					// for (int i = 0; i < jArrayResult.length(); i++) {
-					//
-					// JSONObject jObj = jArrayResult.getJSONObject(i);
-					// listSongData.add(new IdNameData(jObj.getInt("id"),
-					// jObj.getString("title")));
-					// }
+					listView.setAdapter(new SongListAdapter(this, listSongData));
 
-					listView.setAdapter(new IdNameListAdapter(this, listSongData));
+				} else if (id == buySongRequestId) {
 
+					if (response.toLowerCase(Locale.getDefault()).contains("error")) {
+						Toast.displayText(this, R.string.buy_error);
+					} else {
+						Toast.displayText(this, R.string.buy_success);
+					}
 				}
 
 			} else {

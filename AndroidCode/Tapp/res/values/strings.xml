@@ -70,6 +70,8 @@
     <string name="card_expiry_date">Card Expiry Date*</string>
     <string name="cvv_number">3 Digit CVV Number*</string>
     <string name="pay">Pay</string>
+    <string name="buy_error">Error while buying media</string>
+    <string name="buy_success">Media brought successfully</string>
 
     <!-- MyCredits screen -->
     <string name="my_credits">My Credits</string>
