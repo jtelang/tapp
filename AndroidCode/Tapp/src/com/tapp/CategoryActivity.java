@@ -1,6 +1,5 @@
 package com.tapp;
 
-import android.app.FragmentManager.OnBackStackChangedListener;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -11,7 +10,6 @@ import android.widget.Button;
 
 import com.tapp.fragments.GameCategoryFragment;
 import com.tapp.fragments.MusicCategoryFragment;
-import com.tapp.utils.KeyboardUtils;
 
 public class CategoryActivity extends ActionBarActivity implements OnClickListener {
 

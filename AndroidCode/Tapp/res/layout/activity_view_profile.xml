@@ -25,8 +25,7 @@
                 android:id="@+id/txtStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margine_large"
-                android:text="Status" />
+                android:layout_marginLeft="@dimen/margine_large" />
         </LinearLayout>
 
         <LinearLayout
@@ -44,8 +43,7 @@
                 android:id="@+id/txtFullName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margine_normal"
-                android:text="Gabriel" />
+                android:layout_margin="@dimen/margine_normal" />
         </LinearLayout>
 
         <LinearLayout
@@ -63,8 +61,7 @@
                 android:id="@+id/txtEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margine_normal"
-                android:text="test@test.com" />
+                android:layout_margin="@dimen/margine_normal" />
         </LinearLayout>
 
         <LinearLayout
@@ -82,8 +79,7 @@
                 android:id="@+id/txtBirthday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margine_normal"
-                android:text="1 May 1989" />
+                android:layout_margin="@dimen/margine_normal" />
         </LinearLayout>
 
         <LinearLayout
@@ -101,8 +97,7 @@
                 android:id="@+id/txtSex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margine_normal"
-                android:text="Male" />
+                android:layout_margin="@dimen/margine_normal" />
         </LinearLayout>
 
         <LinearLayout
@@ -120,8 +115,7 @@
                 android:id="@+id/txtAge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margine_normal"
-                android:text="25" />
+                android:layout_margin="@dimen/margine_normal" />
         </LinearLayout>
 
         <LinearLayout
@@ -140,7 +134,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margine_normal"
-                android:text="www.google.com" />
+                android:autoLink="web" />
         </LinearLayout>
 
         <LinearLayout
@@ -158,8 +152,7 @@
                 android:id="@+id/txtCity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margine_normal"
-                android:text="Canada" />
+                android:layout_margin="@dimen/margine_normal" />
         </LinearLayout>
 
         <LinearLayout
@@ -178,7 +171,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margine_normal"
-                android:text="286" />
+                android:text="0" />
 
             <Button
                 android:id="@+id/btnViewAllFollowers"
@@ -191,3 +184,7 @@
     </LinearLayout>
 
 </ScrollView>
+
+
+
+

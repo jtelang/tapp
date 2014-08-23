@@ -1,9 +1,9 @@
 package com.tapp.adapters;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import android.app.Activity;
-import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,6 +23,7 @@ public class FriendListAdapter extends BaseAdapter {
 
 	private Activity activity = null;
 	private ArrayList<ContactData> list = null;
+	private ArrayList<ContactData> listTemp = null;
 	private LayoutInflater mInflater = null;
 	private ImageLoader imageLoader = null;
 	private DisplayImageOptions options = null;
@@ -35,6 +36,9 @@ public class FriendListAdapter extends BaseAdapter {
 
 		imageLoader = ImageLoader.getInstance();
 		options = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.ic_launcher).showImageForEmptyUri(R.drawable.ic_launcher).showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true).cacheOnDisk(true).build();
+
+		listTemp = new ArrayList<ContactData>();
+		listTemp.addAll(list);
 	}
 
 	@Override
@@ -97,8 +101,10 @@ public class FriendListAdapter extends BaseAdapter {
 
 					if (data.getContactTypeFlag() == 0) {
 
-//						SmsManager sm = SmsManager.getDefault();
-//						sm.sendTextMessage(data.getPhoneNo(), null, activity.getString(R.string.invitation_message), null, null);
+						// SmsManager sm = SmsManager.getDefault();
+						// sm.sendTextMessage(data.getPhoneNo(), null,
+						// activity.getString(R.string.invitation_message),
+						// null, null);
 						Toast.displayText(activity, R.string.invitation_sent);
 					}
 				}
@@ -107,6 +113,23 @@ public class FriendListAdapter extends BaseAdapter {
 
 		return convertView;
 	}
+
+	public void filter(String charText) {
+		charText = charText.toLowerCase(Locale.getDefault());
+		list.clear();
+
+		if (charText.length() == 0) {
+			list.addAll(listTemp);
+		} else {
+			for (ContactData data : listTemp) {
+				if (data.getName().toLowerCase(Locale.getDefault()).contains(charText)) {
+					list.add(data);
+				}
+			}
+		}
+		notifyDataSetChanged();
+	}
+
 	private static class ViewHolder {
 
 		TextView txtName;

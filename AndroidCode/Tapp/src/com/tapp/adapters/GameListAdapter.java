@@ -1,6 +1,7 @@
 package com.tapp.adapters;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -16,18 +17,20 @@ import com.tapp.request.PARAMS;
 
 public class GameListAdapter extends BaseAdapter {
 
-	private Activity mActivity = null;
 	private ArrayList<IdNameData> mArrayList = null;
+	private ArrayList<IdNameData> mArrayListTemp = null;
 	private LayoutInflater mInflater = null;
 	private OnBuyClickListner listner = null;
 
 	public GameListAdapter(Activity activity, ArrayList<IdNameData> list, OnBuyClickListner listner) {
 
-		this.mActivity = activity;
 		this.mArrayList = list;
 		this.listner = listner;
 
 		mInflater = LayoutInflater.from(activity);
+
+		mArrayListTemp = new ArrayList<IdNameData>();
+		mArrayListTemp.addAll(list);
 	}
 
 	@Override
@@ -80,6 +83,23 @@ public class GameListAdapter extends BaseAdapter {
 
 		return convertView;
 	}
+
+	public void filter(String charText) {
+		charText = charText.toLowerCase(Locale.getDefault());
+		mArrayList.clear();
+
+		if (charText.length() == 0) {
+			mArrayList.addAll(mArrayListTemp);
+		} else {
+			for (IdNameData data : mArrayListTemp) {
+				if (data.getName().toLowerCase(Locale.getDefault()).contains(charText)) {
+					mArrayList.add(data);
+				}
+			}
+		}
+		notifyDataSetChanged();
+	}
+
 	private static class ViewHolder {
 
 		TextView txtName;

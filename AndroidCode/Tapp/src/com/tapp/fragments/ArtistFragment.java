@@ -10,21 +10,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
-import android.view.KeyEvent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnFocusChangeListener;
-import android.view.inputmethod.EditorInfo;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 
 import com.tapp.AlbumFilteredActivity;
 import com.tapp.R;
@@ -52,6 +51,7 @@ public class ArtistFragment extends BaseFragment implements RequestListener {
 	private int artistRequestId = -1;
 
 	private ArrayList<IdNameData> listArtistData = null;
+	private IdNameListAdapter adapter = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,7 @@ public class ArtistFragment extends BaseFragment implements RequestListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		view = inflater.inflate(R.layout.fragment_list, null);
+		view = inflater.inflate(R.layout.fragment_list, container, false);
 
 		listView = (ListView) view.findViewById(R.id.listView);
 		TextView txtEmptyView = (TextView) view.findViewById(R.id.txtEmptyView);
@@ -119,24 +119,20 @@ public class ArtistFragment extends BaseFragment implements RequestListener {
 
 		final AutoCompleteTextView edtSearch = (AutoCompleteTextView) mSearchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
 
-		edtSearch.setOnEditorActionListener(new OnEditorActionListener() {
+		edtSearch.addTextChangedListener(new TextWatcher() {
 			@Override
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-
-				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-
-					KeyboardUtils.hideKeyboard(edtSearch);
-
-					if (mSearchView.getQuery().toString().equals("")) {
-						// Toast.makeText(getActivity(),
-						// getString(R.string.search_bill_no),
-						// Toast.LENGTH_LONG).show();
-						return false;
-					}
-
-					return true;
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				if (adapter != null) {
+					adapter.filter(edtSearch.getText().toString().trim());
 				}
-				return false;
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
 			}
 		});
 
@@ -174,7 +170,8 @@ public class ArtistFragment extends BaseFragment implements RequestListener {
 						listArtistData.add(new IdNameData(jObj.getInt("id"), jObj.getString("name")));
 					}
 
-					listView.setAdapter(new IdNameListAdapter(getActivity(), listArtistData));
+					adapter = new IdNameListAdapter(getActivity(), listArtistData);
+					listView.setAdapter(adapter);
 
 				}
 

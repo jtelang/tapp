@@ -11,7 +11,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
-import android.view.KeyEvent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,13 +20,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 
 import com.tapp.R;
 import com.tapp.SongListActivity;
@@ -54,6 +53,7 @@ public class AlbumFragment extends BaseFragment implements RequestListener {
 	private int albumRequestId = -1, buyAlbumRequestId = -1;
 
 	private ArrayList<IdNameData> listAlbumData = null;
+	private AlbumFragmentAdapter adapter = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -122,24 +122,20 @@ public class AlbumFragment extends BaseFragment implements RequestListener {
 
 		final AutoCompleteTextView edtSearch = (AutoCompleteTextView) mSearchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
 
-		edtSearch.setOnEditorActionListener(new OnEditorActionListener() {
+		edtSearch.addTextChangedListener(new TextWatcher() {
 			@Override
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-
-				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-
-					KeyboardUtils.hideKeyboard(edtSearch);
-
-					if (mSearchView.getQuery().toString().equals("")) {
-						// Toast.makeText(getActivity(),
-						// getString(R.string.search_bill_no),
-						// Toast.LENGTH_LONG).show();
-						return false;
-					}
-
-					return true;
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				if (adapter != null) {
+					adapter.filter(edtSearch.getText().toString().trim());
 				}
-				return false;
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
 			}
 		});
 
@@ -191,7 +187,8 @@ public class AlbumFragment extends BaseFragment implements RequestListener {
 						listAlbumData.add(new IdNameData(jObj.getInt("id"), jObj.getString("title")));
 					}
 
-					listView.setAdapter(new AlbumFragmentAdapter(getActivity(), listAlbumData, buyClickListner));
+					adapter = new AlbumFragmentAdapter(getActivity(), listAlbumData, buyClickListner);
+					listView.setAdapter(adapter);
 
 				} else if (id == buyAlbumRequestId) {
 

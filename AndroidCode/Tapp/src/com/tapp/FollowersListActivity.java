@@ -1,6 +1,10 @@
 package com.tapp;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -12,13 +16,25 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.tapp.adapters.FollowersListAdapter;
+import com.tapp.data.ConstantData;
 import com.tapp.data.ContactData;
+import com.tapp.network.NetworManager;
+import com.tapp.network.RequestListener;
+import com.tapp.network.RequestMethod;
+import com.tapp.request.TappRequestBuilder;
+import com.tapp.utils.Toast;
+import com.tapp.utils.Utils;
 
-public class FollowersListActivity extends ActionBarActivity {
+public class FollowersListActivity extends ActionBarActivity implements RequestListener {
+
+	private static String TAG = FollowersListActivity.class.getName();
 
 	private ListView listView = null;
 
-	private ArrayList<com.tapp.data.ContactData> list = null;
+	private NetworManager networManager = null;
+	private int followerListRequestId = -1;
+
+	private ArrayList<ContactData> listFollowers = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,21 +50,21 @@ public class FollowersListActivity extends ActionBarActivity {
 		TextView txtEmptyView = (TextView) findViewById(R.id.txtEmptyView);
 		listView.setEmptyView(txtEmptyView);
 
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
+		networManager = NetworManager.getInstance();
 
-				getContactList();
+		downloadFollowerList();
+	}
 
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
+	@Override
+	public void onResume() {
+		super.onResume();
+		networManager.addListener(this);
+	}
 
-						listView.setAdapter(new FollowersListAdapter(FollowersListActivity.this, list));
-					}
-				});
-			}
-		}).start();
+	@Override
+	public void onStop() {
+		super.onStop();
+		networManager.removeListeners(this);
 	}
 
 	@Override
@@ -67,35 +83,47 @@ public class FollowersListActivity extends ActionBarActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private void getContactList() {
+	private void downloadFollowerList() {
+
+		networManager.isProgressVisible(true);
+		followerListRequestId = networManager.addRequest(new HashMap<String, String>(), RequestMethod.GET, this, String.format(TappRequestBuilder.WS_MY_FOLLOWERS, ConstantData.USER_ID));
+	}
+
+	@Override
+	public void onSuccess(int id, String response) {
 
 		try {
+			if (!Utils.isEmpty(response)) {
 
-			list = new ArrayList<ContactData>();
-			ContactData data = new ContactData();
-			data.setName("Jack Kalish");
-			data.setStatus("Available");
-			list.add(data);
-			data = new ContactData();
-			data.setName("Leo Thomson");
-			data.setStatus("Hey there");
-			list.add(data);
-			data = new ContactData();
-			data.setName("John Pitt");
-			data.setStatus("Available");
-			list.add(data);
-			data = new ContactData();
-			data.setName("Sima Roy");
-			data.setStatus("In a meeting");
-			list.add(data);
-			data = new ContactData();
-			data.setName("Jenny Loyer");
-			data.setStatus("Available");
-			list.add(data);
+				if (id == followerListRequestId) {
 
+					listFollowers = new ArrayList<ContactData>();
+
+					JSONArray jArrayResult = new JSONArray(response);
+
+					for (int i = 0; i < jArrayResult.length(); i++) {
+
+						JSONObject jObj = jArrayResult.getJSONObject(i);
+						ContactData data = new ContactData();
+						data.setName(jObj.getString("full_name"));
+						data.setStatus(jObj.getString("bio"));
+						data.setPhotoUrl(jObj.getString("photo"));
+						listFollowers.add(data);
+					}
+					listView.setAdapter(new FollowersListAdapter(this, listFollowers));
+				}
+
+			} else {
+
+				// Toast.displayText(this, R.string.invalid_server_response);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			Log.e("Error in getContactList", e.toString());
+			Log.e(TAG, "Error in onSuccess : " + e.toString());
 		}
+	}
+	@Override
+	public void onError(int id, String message) {
+		Toast.displayError(this, message);
 	}
 }

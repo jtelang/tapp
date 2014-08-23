@@ -16,10 +16,8 @@ import android.widget.TextView;
 
 import com.tapp.R;
 import com.tapp.ViewProfileActivity;
-import com.tapp.adapters.FollowersListAdapter;
 import com.tapp.base.BaseFragment;
 import com.tapp.data.ConstantData;
-import com.tapp.data.ContactData;
 import com.tapp.network.NetworManager;
 import com.tapp.network.RequestListener;
 import com.tapp.network.RequestMethod;
@@ -60,7 +58,7 @@ public class FollowerListFragment extends BaseFragment implements RequestListene
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		view = inflater.inflate(R.layout.fragment_list, null);
+		view = inflater.inflate(R.layout.fragment_list, container, false);
 
 		listView = (ListView) view.findViewById(R.id.listView);
 		TextView txtEmptyView = (TextView) view.findViewById(R.id.txtEmptyView);
@@ -84,55 +82,8 @@ public class FollowerListFragment extends BaseFragment implements RequestListene
 		setContentView(view);
 		setContentShown(false);
 
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
+		getMyFollowersList();
 
-				getContactList();
-
-				getActivity().runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-
-						listView.setAdapter(new FollowersListAdapter(getActivity(), list));
-						setContentShown(true);
-					}
-				});
-			}
-		}).start();
-
-	}
-
-	private void getContactList() {
-
-		try {
-
-			list = new ArrayList<ContactData>();
-			ContactData data = new ContactData();
-			data.setName("Jack Kalish");
-			data.setStatus("Available");
-			list.add(data);
-			data = new ContactData();
-			data.setName("Leo Thomson");
-			data.setStatus("Hey there");
-			list.add(data);
-			data = new ContactData();
-			data.setName("John Pitt");
-			data.setStatus("Available");
-			list.add(data);
-			data = new ContactData();
-			data.setName("Sima Roy");
-			data.setStatus("In a meeting");
-			list.add(data);
-			data = new ContactData();
-			data.setName("Jenny Loyer");
-			data.setStatus("Available");
-			list.add(data);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			Log.e("Error in getContactList", e.toString());
-		}
 	}
 
 	private void getMyFollowersList() {

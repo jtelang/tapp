@@ -1,6 +1,7 @@
 package com.tapp.adapters;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -15,12 +16,15 @@ import com.tapp.data.IdNameData;
 public class IdNameListAdapter extends BaseAdapter {
 
 	private ArrayList<IdNameData> list = null;
+	private ArrayList<IdNameData> listTemp = null;
 	private LayoutInflater mInflater = null;
 
 	public IdNameListAdapter(Activity activity, ArrayList<IdNameData> list) {
 		this.list = list;
-
 		mInflater = LayoutInflater.from(activity);
+
+		listTemp = new ArrayList<IdNameData>();
+		listTemp.addAll(list);
 	}
 
 	@Override
@@ -62,6 +66,23 @@ public class IdNameListAdapter extends BaseAdapter {
 
 		return convertView;
 	}
+
+	public void filter(String charText) {
+		charText = charText.toLowerCase(Locale.getDefault());
+		list.clear();
+
+		if (charText.length() == 0) {
+			list.addAll(listTemp);
+		} else {
+			for (IdNameData data : listTemp) {
+				if (data.getName().toLowerCase(Locale.getDefault()).contains(charText)) {
+					list.add(data);
+				}
+			}
+		}
+		notifyDataSetChanged();
+	}
+
 	private static class ViewHolder {
 
 		TextView txtName;

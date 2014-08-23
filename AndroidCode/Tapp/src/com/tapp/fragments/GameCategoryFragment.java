@@ -50,7 +50,7 @@ public class GameCategoryFragment extends BaseFragment implements RequestListene
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		view = inflater.inflate(R.layout.fragment_game_category, null);
+		view = inflater.inflate(R.layout.fragment_game_category, container, false);
 
 		gridView = (GridView) view.findViewById(R.id.gridView);
 		TextView txtEmptyView = (TextView) view.findViewById(R.id.txtEmptyView);
@@ -62,6 +62,7 @@ public class GameCategoryFragment extends BaseFragment implements RequestListene
 
 				Intent intent = new Intent(getActivity(), GameTabActivity.class);
 				intent.putExtra("title", listCategory.get(position).getName());
+				intent.putExtra("categoryId", listCategory.get(position).getId());
 				startActivity(intent);
 			}
 		});

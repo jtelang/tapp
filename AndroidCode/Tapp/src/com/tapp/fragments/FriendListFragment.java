@@ -13,13 +13,22 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.SearchView;
 import android.telephony.PhoneNumberUtils;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -33,7 +42,7 @@ import com.tapp.network.NetworManager;
 import com.tapp.network.RequestListener;
 import com.tapp.network.RequestMethod;
 import com.tapp.request.TappRequestBuilder;
-import com.tapp.utils.PrefManager;
+import com.tapp.utils.KeyboardUtils;
 import com.tapp.utils.Toast;
 import com.tapp.utils.Utils;
 
@@ -42,20 +51,22 @@ public class FriendListFragment extends BaseFragment implements RequestListener 
 	private static String TAG = FriendListFragment.class.getName();
 
 	private View view = null;
+	private SearchView mSearchView = null;
 	private ListView listView = null;
 
 	private NetworManager networManager = null;
-	private PrefManager prefManager = null;
 	private int genresRequestId = -1;
 
 	private ArrayList<com.tapp.data.ContactData> list = null;
+	private FriendListAdapter adapter = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		setHasOptionsMenu(true);
+		
 		networManager = NetworManager.getInstance();
-		prefManager = PrefManager.getInstance(getActivity());
 	}
 
 	@Override
@@ -71,8 +82,58 @@ public class FriendListFragment extends BaseFragment implements RequestListener 
 	}
 
 	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		menu.clear();
+		inflater.inflate(R.menu.menu_search, menu);
+		MenuItem searchItem = menu.findItem(R.id.action_search);
+		mSearchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+		mSearchView.setQueryHint(getString(R.string.search_genres));
+
+		final AutoCompleteTextView edtSearch = (AutoCompleteTextView) mSearchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+
+		edtSearch.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				if (adapter != null) {
+					adapter.filter(edtSearch.getText().toString().trim());
+				}
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+			}
+		});
+
+		edtSearch.setOnFocusChangeListener(new OnFocusChangeListener() {
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+
+				if (!hasFocus) {
+					KeyboardUtils.hideKeyboard(edtSearch);
+				}
+			}
+		});
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		int id = item.getItemId();
+		if (id == android.R.id.home) {
+			KeyboardUtils.hideKeyboard(mSearchView);
+			getFragmentManager().popBackStack();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		view = inflater.inflate(R.layout.fragment_list, null);
+		view = inflater.inflate(R.layout.fragment_list, container, false);
 
 		listView = (ListView) view.findViewById(R.id.listView);
 		TextView txtEmptyView = (TextView) view.findViewById(R.id.txtEmptyView);
@@ -165,7 +226,8 @@ public class FriendListFragment extends BaseFragment implements RequestListener 
 					@Override
 					public void run() {
 
-						listView.setAdapter(new FriendListAdapter(getActivity(), list));
+						adapter = new FriendListAdapter(getActivity(), list);
+						listView.setAdapter(adapter);
 						setContentShown(true);
 					}
 				});
@@ -333,7 +395,8 @@ public class FriendListFragment extends BaseFragment implements RequestListener 
 
 					list = ConstantData.DB.getContactList();
 
-					listView.setAdapter(new FriendListAdapter(getActivity(), list));
+					adapter = new FriendListAdapter(getActivity(), list);
+					listView.setAdapter(adapter);
 
 					// listGenresData = new ArrayList<IdNameData>();
 					// JSONArray jArrayResult = new JSONArray(response);

@@ -2,25 +2,20 @@ package com.tapp.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.tapp.CategoryActivity;
 import com.tapp.MusicTabActivity;
 import com.tapp.R;
 import com.tapp.base.BaseFragment;
-import com.tapp.utils.KeyboardUtils;
 
 public class MusicCategoryFragment extends BaseFragment implements OnClickListener {
 
-	private static String TAG = MusicCategoryFragment.class.getName();
-
 	private View view = null;
-	private Button btnGenres = null, btnArtist = null, btnAlbum = null, btnSongs = null;
+	private Button btnGenres = null, btnArtist = null, btnAlbum = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -29,12 +24,12 @@ public class MusicCategoryFragment extends BaseFragment implements OnClickListen
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		view = inflater.inflate(R.layout.fragment_music_category, null);
+		view = inflater.inflate(R.layout.fragment_music_category, container, false);
 
 		btnGenres = (Button) view.findViewById(R.id.btnGenres);
 		btnArtist = (Button) view.findViewById(R.id.btnArtist);
 		btnAlbum = (Button) view.findViewById(R.id.btnAlbum);
-		btnSongs = (Button) view.findViewById(R.id.btnSongs);
+		// btnSongs = (Button) view.findViewById(R.id.btnSongs);
 
 		btnGenres.setOnClickListener(this);
 		btnArtist.setOnClickListener(this);

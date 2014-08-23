@@ -1,6 +1,7 @@
 package com.tapp.adapters;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -10,25 +11,26 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.tapp.AlbumFilteredActivity;
 import com.tapp.R;
 import com.tapp.data.IdNameData;
 import com.tapp.request.PARAMS;
 
 public class AlbumFragmentAdapter extends BaseAdapter {
 
-	private Activity mActivity = null;
 	private ArrayList<IdNameData> mArrayList = null;
+	private ArrayList<IdNameData> mArrayListTemp = null;
 	private LayoutInflater mInflater = null;
 	private OnBuyClickListner listner = null;
 
 	public AlbumFragmentAdapter(Activity activity, ArrayList<IdNameData> list, OnBuyClickListner listner) {
 
-		this.mActivity = activity;
 		this.mArrayList = list;
 		this.listner = listner;
 
 		mInflater = LayoutInflater.from(activity);
+
+		mArrayListTemp = new ArrayList<IdNameData>();
+		mArrayListTemp.addAll(list);
 	}
 
 	@Override
@@ -81,6 +83,23 @@ public class AlbumFragmentAdapter extends BaseAdapter {
 
 		return convertView;
 	}
+
+	public void filter(String charText) {
+		charText = charText.toLowerCase(Locale.getDefault());
+		mArrayList.clear();
+
+		if (charText.length() == 0) {
+			mArrayList.addAll(mArrayListTemp);
+		} else {
+			for (IdNameData data : mArrayListTemp) {
+				if (data.getName().toLowerCase(Locale.getDefault()).contains(charText)) {
+					mArrayList.add(data);
+				}
+			}
+		}
+		notifyDataSetChanged();
+	}
+
 	private static class ViewHolder {
 
 		TextView txtName;

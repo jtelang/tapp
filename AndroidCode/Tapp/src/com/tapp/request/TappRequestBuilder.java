@@ -21,9 +21,11 @@ public class TappRequestBuilder implements PARAMS {
 	public static final String WS_ALBUMS_PARAM = "albums/show/%s";
 	public static final String WS_SONGS_PARAM = "songs/show/%s";
 	public static final String WS_GAME_TYPE = "gametype";
+	public static final String WS_GAMELIST_BY_CATEGORY = "myGames/show/%s";
 	public static final String WS_REGISTER_USER = "user";
-	public static final String WS_GET_PROFILE = "myUsers/show";
+	public static final String WS_GET_PROFILE = "myUsers/show?pn=%s";
 	public static final String WS_MY_FOLLOWERS = "myFollowers/show/%s";
+	public static final String WS_ADD_FOLLOWER = "myFollowers/save?uid=%s&fid=%s";
 	public static final String WS_BUY_MEDIA = "mediabuy";
 
 	public static HashMap<String, String> getRegisterUserRequest(String phone) {
@@ -76,7 +78,7 @@ public class TappRequestBuilder implements PARAMS {
 			jObj.put(TAG_MEDIA_ID, mediaId);
 			jObj.put(TAG_MEDIA_TYPE, mediaType);
 			jObj.put(TAG_BUY_DATE, format.format(Calendar.getInstance().getTime()));
-			jObj.put(TAG_VERSION, VERSION);
+			jObj.put(TAG_RECOMMEND, true);
 			jObj.put(TAG_STORE, store);
 
 		} catch (Exception e) {

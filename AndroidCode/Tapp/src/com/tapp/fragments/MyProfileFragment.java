@@ -1,7 +1,6 @@
 package com.tapp.fragments;
 
-import java.util.ArrayList;
-
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.content.Intent;
@@ -11,12 +10,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tapp.FollowersListActivity;
 import com.tapp.R;
 import com.tapp.base.BaseFragment;
 import com.tapp.data.ConstantData;
-import com.tapp.data.MyCreditData;
 import com.tapp.network.NetworManager;
 import com.tapp.network.RequestListener;
 import com.tapp.network.RequestMethod;
@@ -31,23 +33,39 @@ public class MyProfileFragment extends BaseFragment implements OnClickListener, 
 
 	private View view = null;
 	private Button btnViewAllFollowers = null;
+	private TextView txtStatus = null, txtFullName = null, txtEmail = null, txtBirthday = null, txtSex = null, txtAge = null, txtWebpage = null, txtCity = null, txtFollowers = null;
+	private ImageView imvProfile = null;
 
 	private NetworManager networManager = null;
 	private int profileRequestId = -1;
 
-	private ArrayList<MyCreditData> list = null;
+	private ImageLoader imageLoader = null;
+	private DisplayImageOptions options = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		networManager = NetworManager.getInstance();
+
+		imageLoader = ImageLoader.getInstance();
+		options = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.ic_launcher).showImageForEmptyUri(R.drawable.ic_launcher).showImageOnFail(R.drawable.ic_launcher).cacheInMemory(true).cacheOnDisk(true).build();
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		view = inflater.inflate(R.layout.activity_view_profile, null);
+		view = inflater.inflate(R.layout.activity_view_profile, container, false);
 
+		imvProfile = (ImageView) view.findViewById(R.id.imvProfile);
+		txtStatus = (TextView) view.findViewById(R.id.txtStatus);
+		txtFullName = (TextView) view.findViewById(R.id.txtFullName);
+		txtEmail = (TextView) view.findViewById(R.id.txtEmail);
+		txtBirthday = (TextView) view.findViewById(R.id.txtBirthday);
+		txtSex = (TextView) view.findViewById(R.id.txtSex);
+		txtAge = (TextView) view.findViewById(R.id.txtAge);
+		txtWebpage = (TextView) view.findViewById(R.id.txtWebpage);
+		txtCity = (TextView) view.findViewById(R.id.txtCity);
+		txtFollowers = (TextView) view.findViewById(R.id.txtFollowers);
 		btnViewAllFollowers = (Button) view.findViewById(R.id.btnViewAllFollowers);
 
 		btnViewAllFollowers.setOnClickListener(this);
@@ -79,7 +97,7 @@ public class MyProfileFragment extends BaseFragment implements OnClickListener, 
 	private void downloadUserProfile() {
 
 		networManager.isProgressVisible(false);
-		profileRequestId = networManager.addRequest(TappRequestBuilder.getRegisterUserRequest(ConstantData.PHONE_NO), RequestMethod.POST, getActivity(), TappRequestBuilder.WS_GET_PROFILE);
+		profileRequestId = networManager.addRequest(TappRequestBuilder.getRegisterUserRequest(ConstantData.PHONE_NO), RequestMethod.POST, getActivity(), String.format(TappRequestBuilder.WS_GET_PROFILE, "9167466253"));
 	}
 
 	@Override
@@ -90,21 +108,28 @@ public class MyProfileFragment extends BaseFragment implements OnClickListener, 
 
 				if (id == profileRequestId) {
 
-					JSONObject jObjResponse = new JSONObject(response);
+					JSONArray jArrayResponse = new JSONArray(response);
 
-					// if (Utils.isEmpty(jObjResponse.getString("id"))) {
-					//
-					// ConstantData.USER_ID = jObjResponse.getString("id");
-					// ConstantData.PHONE_NO = jObjResponse.getString("phone");
-					//
-					// Intent intent = new Intent(LoginActivity.this,
-					// MainActivity.class);
-					// startActivity(intent);
-					// finish();
-					//
-					// } else {
-					// Toast.displayText(this, R.string.registration_failed);
-					// }
+					if (jArrayResponse.length() > 0) {
+						JSONObject jObj = jArrayResponse.getJSONObject(0);
+
+						txtStatus.setText(jObj.getString("bio"));
+						txtFullName.setText(jObj.getString("full_name"));
+						txtEmail.setText(jObj.getString("email"));
+						// txtBirthday.setText(jObj.getString(""));
+						txtAge.setText(jObj.getString("age"));
+						// txtSex.setText(jObj.getString(""));
+						txtWebpage.setText(jObj.getString("homepage"));
+						txtCity.setText(jObj.getString("city"));
+						// txtFollowers.setText(jObj.getString(""));
+
+						String photoURL = jObj.getString("photo");
+						if (!Utils.isEmpty(photoURL)) {
+							imageLoader.displayImage(photoURL, imvProfile, options);
+						} else {
+							imvProfile.setImageResource(R.drawable.ic_launcher);
+						}
+					}
 				}
 
 			} else {
@@ -131,8 +156,12 @@ public class MyProfileFragment extends BaseFragment implements OnClickListener, 
 
 		if (view.equals(btnViewAllFollowers)) {
 
-			Intent intent = new Intent(getActivity(), FollowersListActivity.class);
-			startActivity(intent);
+			if (Utils.isEmpty(txtFollowers.getText().toString().trim()) || txtFollowers.getText().equals("0")) {
+				Toast.displayText(getActivity(), R.string.no_followers_available);
+			} else {
+				Intent intent = new Intent(getActivity(), FollowersListActivity.class);
+				startActivity(intent);
+			}
 		}
 	}
 }

@@ -11,15 +11,14 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
-import android.view.KeyEvent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
+import android.view.View.OnFocusChangeListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 
 import com.tapp.adapters.SongListAdapter;
 import com.tapp.data.IdNameData;
@@ -43,6 +42,7 @@ public class SongListActivity extends ActionBarActivity implements RequestListen
 	private int downloadSongRequestId = -1, buySongRequestId = -1;
 
 	private ArrayList<IdNameData> listSongData = null;
+	private SongListAdapter adapter = null;
 	private int artistId = 0;
 
 	@Override
@@ -60,8 +60,6 @@ public class SongListActivity extends ActionBarActivity implements RequestListen
 		artistId = getIntent().getIntExtra("id", 0);
 
 		listView = (ListView) findViewById(R.id.listView);
-		TextView txtEmptyView = (TextView) findViewById(R.id.txtEmptyView);
-		listView.setEmptyView(txtEmptyView);
 
 		networManager = NetworManager.getInstance();
 
@@ -95,24 +93,30 @@ public class SongListActivity extends ActionBarActivity implements RequestListen
 
 		final AutoCompleteTextView edtSearch = (AutoCompleteTextView) mSearchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
 
-		edtSearch.setOnEditorActionListener(new OnEditorActionListener() {
+		edtSearch.addTextChangedListener(new TextWatcher() {
 			@Override
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-
-				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-
-					KeyboardUtils.hideKeyboard(edtSearch);
-
-					if (mSearchView.getQuery().toString().equals("")) {
-						// Toast.makeText(getActivity(),
-						// getString(R.string.search_bill_no),
-						// Toast.LENGTH_LONG).show();
-						return false;
-					}
-
-					return true;
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				if (adapter != null) {
+					adapter.filter(edtSearch.getText().toString().trim());
 				}
-				return false;
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+			}
+		});
+
+		edtSearch.setOnFocusChangeListener(new OnFocusChangeListener() {
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+
+				if (!hasFocus) {
+					KeyboardUtils.hideKeyboard(edtSearch);
+				}
 			}
 		});
 		return true;
@@ -142,6 +146,8 @@ public class SongListActivity extends ActionBarActivity implements RequestListen
 	@Override
 	public void onSuccess(int id, String response) {
 
+		listView.setEmptyView(findViewById(R.id.txtEmptyView));
+
 		try {
 			if (!Utils.isEmpty(response)) {
 
@@ -152,7 +158,8 @@ public class SongListActivity extends ActionBarActivity implements RequestListen
 					JSONObject jObj = new JSONObject(response);
 					listSongData.add(new IdNameData(jObj.getInt("id"), jObj.getString("title")));
 
-					listView.setAdapter(new SongListAdapter(this, listSongData));
+					adapter = new SongListAdapter(this, listSongData);
+					listView.setAdapter(adapter);
 
 				} else if (id == buySongRequestId) {
 

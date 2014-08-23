@@ -12,17 +12,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 
-import com.tapp.fragments.AlbumFragment;
-import com.tapp.fragments.ArtistFragment;
-import com.tapp.fragments.GameCategoryFragment;
 import com.tapp.fragments.GamesTabCatFragment;
-import com.tapp.fragments.GenresFragment;
-import com.tapp.fragments.SongsFragment;
 
 public class GameTabActivity extends ActionBarActivity implements ActionBar.TabListener {
 
 	private SectionsPagerAdapter mSectionsPagerAdapter = null;
 	private ViewPager mViewPager = null;
+
+	private int categoryId = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +33,7 @@ public class GameTabActivity extends ActionBarActivity implements ActionBar.TabL
 		actionBar.setDisplayShowHomeEnabled(true);
 
 		actionBar.setTitle(getIntent().getStringExtra("title"));
+		categoryId = getIntent().getIntExtra("categoryId", 0);
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the activity.
@@ -115,17 +113,24 @@ public class GameTabActivity extends ActionBarActivity implements ActionBar.TabL
 			// getItem is called to instantiate the fragment for the given page.
 			// Return a PlaceholderFragment (defined as a static inner class
 			// below).
-			switch (position) {
-				case 0 :
-					return new GamesTabCatFragment();
-				case 1 :
-					return new GamesTabCatFragment();
-				case 2 :
-					return new GamesTabCatFragment();
-				case 3 :
-					return new GamesTabCatFragment();
-			}
-			return null;
+			// switch (position) {
+			// case 0 :
+			// return new GamesTabCatFragment();
+			// case 1 :
+			// return new GamesTabCatFragment();
+			// case 2 :
+			// return new GamesTabCatFragment();
+			// case 3 :
+			// return new GamesTabCatFragment();
+			// }
+
+			Bundle bundle = new Bundle();
+			bundle.putInt("categoryId", categoryId);
+
+			Fragment fragment = new GamesTabCatFragment();
+			fragment.setArguments(bundle);
+
+			return fragment;
 		}
 
 		@Override

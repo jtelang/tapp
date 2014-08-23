@@ -6,11 +6,11 @@ public interface PARAMS {
 
 	public static final String TAG_PHONE = "phone";
 	public static final String TAG_USER = "user";
-	public static final String TAG_MEDIA_ID = "media_id";
-	public static final String TAG_MEDIA_TYPE = "media_identifier";
-	public static final String TAG_BUY_DATE = "date_created";
-	public static final String TAG_VERSION = "version";
+	public static final String TAG_MEDIA_ID = "mediaId";
+	public static final String TAG_MEDIA_TYPE = "mediaIdentifier";
+	public static final String TAG_BUY_DATE = "dateCreated";
 	public static final String TAG_STORE = "store";
+	public static final String TAG_RECOMMEND = "recommend";
 
 	// ************** Pref Keys ***************
 

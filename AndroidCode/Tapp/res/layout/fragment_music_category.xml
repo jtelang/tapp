@@ -14,40 +14,27 @@
         android:layout_marginTop="30dp" >
 
         <Button
+            android:id="@+id/btnGenres"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="@string/genres" />
+
+        <Button
             android:id="@+id/btnArtist"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginTop="@dimen/margine_very_large"
+            android:layout_marginLeft="@dimen/margine_very_large"
+            android:layout_toRightOf="@+id/btnGenres"
             android:text="@string/artist" />
 
         <Button
             android:id="@+id/btnAlbum"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginLeft="@dimen/margine_very_large"
-            android:layout_marginRight="@dimen/margine_very_large"
-            android:layout_toRightOf="@+id/btnArtist"
+            android:layout_below="@+id/btnGenres"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margine_very_large"
             android:text="@string/album" />
-
-        <Button
-            android:id="@+id/btnGenres"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_below="@+id/btnArtist"
-            android:layout_marginLeft="@dimen/margine_very_large"
-            android:layout_marginTop="@dimen/margine_very_large"
-            android:text="@string/genres" />
-
-        <Button
-            android:id="@+id/btnSongs"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_below="@+id/btnAlbum"
-            android:layout_marginBottom="@dimen/margine_very_large"
-            android:layout_marginLeft="@dimen/margine_very_large"
-            android:layout_marginTop="@dimen/margine_very_large"
-            android:layout_toRightOf="@+id/btnGenres"
-            android:text="@string/songs" />
     </RelativeLayout>
 
     <Button
