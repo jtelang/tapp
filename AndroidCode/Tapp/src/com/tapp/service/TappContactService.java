@@ -1,5 +1,8 @@
 package com.tapp.service;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.app.Service;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -16,6 +19,8 @@ import com.tapp.R;
 import com.tapp.data.ConstantData;
 import com.tapp.data.ContactData;
 import com.tapp.data.DBHelper;
+import com.tapp.request.TappRequestBuilder;
+import com.tapp.utils.HTTPUtils;
 
 public class TappContactService extends Service {
 
@@ -68,21 +73,27 @@ public class TappContactService extends Service {
 		public void onChange(boolean selfChange) {
 			super.onChange(selfChange);
 
-			final int currentCount = getContactCount();
-			if (currentCount < mContactCount) {
-				// DELETE HAPPEN.
-				// Log.e(TAG, "DELETE HAPPEN");
-				checkContact(0);
-			} else if (currentCount == mContactCount) {
-				// UPDATE HAPPEN.
-				// Log.e(TAG, "UPDATE HAPPEN");
-				checkContact(1);
-			} else {
-				// INSERT HAPPEN.
-				// Log.e(TAG, "INSERT HAPPEN");
-				checkContact(1);
-			}
-			mContactCount = currentCount;
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+
+					final int currentCount = getContactCount();
+					if (currentCount < mContactCount) {
+						// DELETE HAPPEN.
+						Log.e(TAG, "DELETE HAPPEN");
+						checkContact(0);
+					} else if (currentCount == mContactCount) {
+						// UPDATE HAPPEN.
+						Log.e(TAG, "UPDATE HAPPEN");
+						checkContact(1);
+					} else {
+						// INSERT HAPPEN.
+						Log.e(TAG, "INSERT HAPPEN");
+						checkContact(1);
+					}
+					mContactCount = currentCount;
+				}
+			}).start();
 		}
 
 	};
@@ -96,8 +107,10 @@ public class TappContactService extends Service {
 	public void onDestroy() {
 		super.onDestroy();
 		getContentResolver().unregisterContentObserver(mObserver);
+		Log.e(TAG, "Service stopped");
 
-		Log.e(TAG, "Service ended");
+		Intent intent = new Intent("com.tapp.contactservice.STOPPED");
+		sendBroadcast(intent);
 	}
 
 	/**
@@ -158,24 +171,30 @@ public class TappContactService extends Service {
 										// "New added contact : raw_id = " +
 										// rawContactId + " name = " + name +
 										// " phone = " + phoneNo);
-										ConstantData.DB.insertContact(rawContactId, phoneNo, name, 0, imageUri.toString(), getString(R.string.available));
+										int userType = syncContact(phoneNo);
+										ConstantData.DB.insertContact(rawContactId, phoneNo, name, userType, imageUri.toString(), getString(R.string.available));
 
 									} else {
 
-										if (!data.getPhoneNo().equals(phoneNo)) {
+										if (!data.getPhone().equals(phoneNo)) {
+
 											// phone no updated
 											// Log.e(TAG,
 											// "Update contact(phone) : raw_id = "
 											// + rawContactId + " name = " +
 											// name + " phone = " + phoneNo);
-											ConstantData.DB.updateContactByRawId(rawContactId, name, phoneNo, 0, imageUri.toString(), getString(R.string.available));
+											int userType = syncContact(phoneNo);
+											ConstantData.DB.updateContactByRawId(rawContactId, name, phoneNo, userType, imageUri.toString(), getString(R.string.available));
+
 										} else {
+
 											// name or other details updated
 											// Log.e(TAG,
 											// "Update contact(name) : raw_id = "
 											// + rawContactId + " name = " +
 											// name + " phone = " + phoneNo);
-											ConstantData.DB.updateContactByRawId(rawContactId, name, phoneNo, data.getContactTypeFlag(), imageUri.toString(), data.getStatus());
+											ConstantData.DB.updateContactByRawId(rawContactId, name, phoneNo, data.getUserType(), imageUri.toString(), data.getBio());
+
 										}
 									}
 								}
@@ -200,7 +219,35 @@ public class TappContactService extends Service {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			Log.e("Error in checkContact", e.toString());
+			Log.e(TAG, "Error in checkContact : " + e.toString());
 		}
+	}
+
+	private int syncContact(String phoneNo) {
+
+		try {
+
+			String response = HTTPUtils.doHTTPGetRequest(ConstantData.SERVER_URL + String.format(TappRequestBuilder.WS_CONTACT_SYNC, ConstantData.USER_ID, phoneNo));
+
+			JSONObject jObjResponse = new JSONObject(response);
+
+			if (jObjResponse.getInt("status") == 0) {
+
+				JSONArray jArrayResult = jObjResponse.getJSONArray("result");
+
+				if (jArrayResult.length() > 0) {
+
+					JSONObject jObj = jArrayResult.getJSONObject(0);
+
+					return jObj.getInt("userType");
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.e(TAG, "Error in syncContact : " + e.toString());
+		}
+
+		return 0;
 	}
 }

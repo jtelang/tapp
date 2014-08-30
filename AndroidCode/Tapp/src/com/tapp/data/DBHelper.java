@@ -304,12 +304,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
 					ContactData data = new ContactData();
 					data.setId(c.getInt(0));
-					data.setPhoneNo(c.getString(1));
+					data.setPhone(c.getString(1));
 					data.setName(c.getString(2));
-					data.setContactTypeFlag(c.getInt(3));
-					data.setPhotoUrl(c.getString(4));
+					data.setUserType(c.getInt(3));
+					data.setPhoto(c.getString(4));
 					data.setRawContatId(c.getInt(5));
-					data.setStatus(c.getString(6));
+					data.setBio(c.getString(6));
 
 					list.add(data);
 				}
@@ -341,12 +341,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
 				ContactData data = new ContactData();
 				data.setId(c.getInt(0));
-				data.setPhoneNo(c.getString(1));
+				data.setPhone(c.getString(1));
 				data.setName(c.getString(2));
-				data.setContactTypeFlag(c.getInt(3));
-				data.setPhotoUrl(c.getString(4));
+				data.setUserType(c.getInt(3));
+				data.setPhoto(c.getString(4));
 				data.setRawContatId(c.getInt(5));
-				data.setStatus(c.getString(6));
+				data.setBio(c.getString(6));
 
 				return data;
 			}

@@ -3,10 +3,8 @@ package com.tapp.adapters;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -16,7 +14,6 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tapp.R;
 import com.tapp.data.ContactData;
-import com.tapp.utils.Toast;
 import com.tapp.utils.Utils;
 
 public class FollowersListAdapter extends BaseAdapter {
@@ -74,10 +71,10 @@ public class FollowersListAdapter extends BaseAdapter {
 		if (data != null) {
 
 			mHolder.txtName.setText(data.getName());
-			mHolder.txtStatus.setText(data.getStatus());
+			mHolder.txtStatus.setText(data.getBio());
 
-			if (!Utils.isEmpty(data.getPhotoUrl())) {
-				imageLoader.displayImage(data.getPhotoUrl(), mHolder.imvPhoto, options);
+			if (!Utils.isEmpty(data.getPhoto())) {
+				imageLoader.displayImage(data.getPhoto(), mHolder.imvPhoto, options);
 			} else {
 				mHolder.imvPhoto.setImageResource(R.drawable.ic_launcher);
 			}

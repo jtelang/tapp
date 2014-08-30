@@ -79,18 +79,18 @@ public class FriendListAdapter extends BaseAdapter {
 		if (data != null) {
 
 			mHolder.txtName.setText(data.getName());
-			mHolder.txtStatus.setText(data.getStatus());
+			mHolder.txtStatus.setText(data.getBio());
 
-			if (data.getContactTypeFlag() == 0) {
+			if (data.getUserType() == 0) {
 				mHolder.txtContactType.setText("Invite");
-			} else if (data.getContactTypeFlag() == 1) {
+			} else if (data.getUserType() == 1) {
 				mHolder.txtContactType.setText("Tapp");
-			} else if (data.getContactTypeFlag() == 2) {
+			} else if (data.getUserType() == 2) {
 				mHolder.txtContactType.setText("Friend");
 			}
 
-			if (!Utils.isEmpty(data.getPhotoUrl())) {
-				imageLoader.displayImage(data.getPhotoUrl(), mHolder.imvPhoto, options);
+			if (!Utils.isEmpty(data.getPhoto())) {
+				imageLoader.displayImage(data.getPhoto(), mHolder.imvPhoto, options);
 			} else {
 				mHolder.imvPhoto.setImageResource(R.drawable.ic_launcher);
 			}
@@ -99,7 +99,7 @@ public class FriendListAdapter extends BaseAdapter {
 				@Override
 				public void onClick(View v) {
 
-					if (data.getContactTypeFlag() == 0) {
+					if (data.getUserType() == 0) {
 
 						// SmsManager sm = SmsManager.getDefault();
 						// sm.sendTextMessage(data.getPhoneNo(), null,

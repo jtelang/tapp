@@ -55,7 +55,7 @@ public class FriendListFragment extends BaseFragment implements RequestListener 
 	private ListView listView = null;
 
 	private NetworManager networManager = null;
-	private int genresRequestId = -1;
+	private int contactSyncRequestId = -1;
 
 	private ArrayList<com.tapp.data.ContactData> list = null;
 	private FriendListAdapter adapter = null;
@@ -65,7 +65,7 @@ public class FriendListFragment extends BaseFragment implements RequestListener 
 		super.onCreate(savedInstanceState);
 
 		setHasOptionsMenu(true);
-		
+
 		networManager = NetworManager.getInstance();
 	}
 
@@ -369,7 +369,7 @@ public class FriendListFragment extends BaseFragment implements RequestListener 
 	private void syncPhoneNumbers(String phoneNumbers) {
 
 		networManager.isProgressVisible(false);
-		genresRequestId = networManager.addRequest(new HashMap<String, String>(), RequestMethod.GET, getActivity(), TappRequestBuilder.WS_GENRES);
+		contactSyncRequestId = networManager.addRequest(new HashMap<String, String>(), RequestMethod.GET, getActivity(), String.format(TappRequestBuilder.WS_CONTACT_SYNC, ConstantData.USER_ID, phoneNumbers));
 	}
 
 	@Override
@@ -378,39 +378,38 @@ public class FriendListFragment extends BaseFragment implements RequestListener 
 		try {
 			if (!Utils.isEmpty(response)) {
 
-				if (id == genresRequestId) {
+				if (id == contactSyncRequestId) {
 
-					JSONArray jArray = new JSONArray(getString(R.string.temp_json));
+					JSONObject jObjResponse = new JSONObject(response);
 
-					ConstantData.DB.beginTransaction();
+					if (jObjResponse.getInt("status") == 0) {
 
-					for (int i = 0; i < jArray.length(); i++) {
+						try {
 
-						JSONObject jObj = jArray.getJSONObject(i);
+							JSONArray jArrayResult = jObjResponse.getJSONArray("result");
 
-						ConstantData.DB.updateContactByPhoneNo(jObj.getString("phoneNo"), jObj.getInt("contactTypeFlag"), jObj.getString("photoUrl"), jObj.getString("status"));
+							ConstantData.DB.beginTransaction();
+
+							for (int i = 0; i < jArrayResult.length(); i++) {
+
+								JSONObject jObj = jArrayResult.getJSONObject(i);
+
+								ConstantData.DB.updateContactByPhoneNo(jObj.getString("phone"), jObj.getInt("userType"), jObj.getString("photo"), jObj.getString("bio"));
+							}
+
+							ConstantData.DB.endTransaction();
+
+							list = ConstantData.DB.getContactList();
+
+							adapter = new FriendListAdapter(getActivity(), list);
+							listView.setAdapter(adapter);
+
+						} catch (Exception e) {
+							e.printStackTrace();
+						} finally {
+							setContentShown(true);
+						}
 					}
-
-					ConstantData.DB.endTransaction();
-
-					list = ConstantData.DB.getContactList();
-
-					adapter = new FriendListAdapter(getActivity(), list);
-					listView.setAdapter(adapter);
-
-					// listGenresData = new ArrayList<IdNameData>();
-					// JSONArray jArrayResult = new JSONArray(response);
-					//
-					// for (int i = 0; i < jArrayResult.length(); i++) {
-					//
-					// JSONObject jObj = jArrayResult.getJSONObject(i);
-					// listGenresData.add(new IdNameData(jObj.getInt("id"),
-					// jObj.getString("genre")));
-					// }
-					//
-					// listView.setAdapter(new IdNameListAdapter(getActivity(),
-					// listGenresData));
-
 				}
 
 			} else {
@@ -418,6 +417,7 @@ public class FriendListFragment extends BaseFragment implements RequestListener 
 				// Toast.displayText(getActivity(),
 				// R.string.invalid_server_response);
 			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.e(TAG, "Error in onSuccess : " + e.toString());

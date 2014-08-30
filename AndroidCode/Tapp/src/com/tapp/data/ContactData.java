@@ -3,92 +3,61 @@ package com.tapp.data;
 public class ContactData {
 
 	private int id = 0;
-	private String phoneNo = "";
+	private int user_id = 0;
 	private String name = "";
-	private int contactTypeFlag = 0;
-	private String photoUrl = "";
+	private String phone = "";
+	private int userType = 0;
+	private String photo = "";
+	private String bio = "";
 	private int rawContatId = 0;
-	private String status = "";
-
-	public ContactData() {
-		super();
-	}
-
-	public ContactData(String phoneNo, String name, int contactTypeFlag, String photoUrl, int rawContatId, String status) {
-		super();
-		this.phoneNo = phoneNo;
-		this.name = name;
-		this.contactTypeFlag = contactTypeFlag;
-		this.photoUrl = photoUrl;
-		this.rawContatId = rawContatId;
-		this.status = status;
-	}
-
-	public ContactData(int id, String phoneNo, String name, int contactTypeFlag, String photoUrl, int rawContatId, String status) {
-		super();
-		this.id = id;
-		this.phoneNo = phoneNo;
-		this.name = name;
-		this.contactTypeFlag = contactTypeFlag;
-		this.photoUrl = photoUrl;
-		this.rawContatId = rawContatId;
-		this.status = status;
-	}
 
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public String getPhoneNo() {
-		return phoneNo;
+	public int getUserId() {
+		return user_id;
 	}
-
-	public void setPhoneNo(String phoneNo) {
-		this.phoneNo = phoneNo;
+	public void setUseId(int user_id) {
+		this.user_id = user_id;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public int getContactTypeFlag() {
-		return contactTypeFlag;
+	public String getPhone() {
+		return phone;
 	}
-
-	public void setContactTypeFlag(int contactTypeFlag) {
-		this.contactTypeFlag = contactTypeFlag;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
-
-	public String getPhotoUrl() {
-		return photoUrl;
+	public int getUserType() {
+		return userType;
 	}
-
-	public void setPhotoUrl(String photoUrl) {
-		this.photoUrl = photoUrl;
+	public void setUserType(int userType) {
+		this.userType = userType;
 	}
-
+	public String getPhoto() {
+		return photo;
+	}
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+	public String getBio() {
+		return bio;
+	}
+	public void setBio(String bio) {
+		this.bio = bio;
+	}
 	public int getRawContatId() {
 		return rawContatId;
 	}
-
 	public void setRawContatId(int rawContatId) {
 		this.rawContatId = rawContatId;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
 	}
 
 }

@@ -11,6 +11,7 @@ import com.google.android.gcm.GCMRegistrar;
 import com.tapp.data.ConstantData;
 import com.tapp.data.DBHelper;
 import com.tapp.request.PARAMS;
+import com.tapp.service.TappContactService;
 import com.tapp.utils.ConnectivityTools;
 import com.tapp.utils.PrefManager;
 
@@ -65,11 +66,10 @@ public class SplashActivity extends Activity {
 			// }
 			//
 
-			// if (TappContactService.getInstance() == null) {
-			// Intent intent = new Intent(SplashActivity.this,
-			// TappContactService.class);
-			// startService(intent);
-			// }
+			if (TappContactService.getInstance() == null) {
+				Intent intent = new Intent(SplashActivity.this, TappContactService.class);
+				startService(intent);
+			}
 
 			// new Handler().postDelayed(new Runnable() {
 			// public void run() {

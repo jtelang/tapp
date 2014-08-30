@@ -106,8 +106,8 @@ public class FollowersListActivity extends ActionBarActivity implements RequestL
 						JSONObject jObj = jArrayResult.getJSONObject(i);
 						ContactData data = new ContactData();
 						data.setName(jObj.getString("full_name"));
-						data.setStatus(jObj.getString("bio"));
-						data.setPhotoUrl(jObj.getString("photo"));
+						data.setBio(jObj.getString("bio"));
+						data.setPhoto(jObj.getString("photo"));
 						listFollowers.add(data);
 					}
 					listView.setAdapter(new FollowersListAdapter(this, listFollowers));

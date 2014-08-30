@@ -1095,12 +1095,12 @@ containing a value of this type.
         public static final int abc_textfield_searchview_right_holo_light=0x7f020056;
         public static final int box_border=0x7f020057;
         public static final int drawer_shadow=0x7f020058;
-        public static final int female=0x7f020059;
-        public static final int ic_drawer=0x7f02005a;
-        public static final int ic_launcher=0x7f02005b;
-        public static final int ic_menu_friendslist=0x7f02005c;
-        public static final int ic_menu_invite=0x7f02005d;
-        public static final int male=0x7f02005e;
+        public static final int ic_drawer=0x7f020059;
+        public static final int ic_launcher=0x7f02005a;
+        public static final int ic_menu_friendslist=0x7f02005b;
+        public static final int ic_menu_invite=0x7f02005c;
+        public static final int tgl_female=0x7f02005d;
+        public static final int tgl_male=0x7f02005e;
         public static final int tgl_male_female=0x7f02005f;
     }
     public static final class id {
@@ -1213,6 +1213,7 @@ containing a value of this type.
         public static final int textView4=0x7f050041;
         public static final int textView5=0x7f050046;
         public static final int textView6=0x7f05004a;
+        public static final int tglGender=0x7f050065;
         public static final int title=0x7f05002b;
         public static final int top_action_bar=0x7f050020;
         public static final int txtAge=0x7f050066;
@@ -1237,7 +1238,6 @@ containing a value of this type.
         public static final int txtReceivedDate=0x7f050084;
         public static final int txtRecommendedBy=0x7f050083;
         public static final int txtRetailer=0x7f050086;
-        public static final int txtSex=0x7f050065;
         public static final int txtSingerName=0x7f050079;
         public static final int txtSongName=0x7f050089;
         public static final int txtStatus=0x7f050061;

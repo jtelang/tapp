@@ -143,6 +143,12 @@ public class SongListActivity extends ActionBarActivity implements RequestListen
 		buySongRequestId = networManager.addRequest(TappRequestBuilder.getBuyMediaRequest(mediaId, mediaType, store), RequestMethod.POST, this, TappRequestBuilder.WS_BUY_MEDIA);
 	}
 
+	public void recommendSongRequest(String mediaId, String mediaType, String store) {
+
+		networManager.isProgressVisible(true);
+		buySongRequestId = networManager.addRequest(TappRequestBuilder.getBuyMediaRequest(mediaId, mediaType, store), RequestMethod.POST, this, TappRequestBuilder.WS_BUY_MEDIA);
+	}
+	
 	@Override
 	public void onSuccess(int id, String response) {
 

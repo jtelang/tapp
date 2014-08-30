@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -33,8 +34,9 @@ public class MyProfileFragment extends BaseFragment implements OnClickListener, 
 
 	private View view = null;
 	private Button btnViewAllFollowers = null;
-	private TextView txtStatus = null, txtFullName = null, txtEmail = null, txtBirthday = null, txtSex = null, txtAge = null, txtWebpage = null, txtCity = null, txtFollowers = null;
+	private TextView txtStatus = null, txtFullName = null, txtEmail = null, txtBirthday = null, txtAge = null, txtWebpage = null, txtCity = null, txtFollowers = null;
 	private ImageView imvProfile = null;
+	private ToggleButton tglGender = null;
 
 	private NetworManager networManager = null;
 	private int profileRequestId = -1;
@@ -61,7 +63,7 @@ public class MyProfileFragment extends BaseFragment implements OnClickListener, 
 		txtFullName = (TextView) view.findViewById(R.id.txtFullName);
 		txtEmail = (TextView) view.findViewById(R.id.txtEmail);
 		txtBirthday = (TextView) view.findViewById(R.id.txtBirthday);
-		txtSex = (TextView) view.findViewById(R.id.txtSex);
+		tglGender = (ToggleButton) view.findViewById(R.id.tglGender);
 		txtAge = (TextView) view.findViewById(R.id.txtAge);
 		txtWebpage = (TextView) view.findViewById(R.id.txtWebpage);
 		txtCity = (TextView) view.findViewById(R.id.txtCity);
@@ -91,13 +93,13 @@ public class MyProfileFragment extends BaseFragment implements OnClickListener, 
 		setContentView(view);
 		setContentShown(false);
 
-		downloadUserProfile();
+		downloadUserProfile(ConstantData.USER_ID);
 	}
 
-	private void downloadUserProfile() {
+	private void downloadUserProfile(String userId) {
 
 		networManager.isProgressVisible(false);
-		profileRequestId = networManager.addRequest(TappRequestBuilder.getRegisterUserRequest(ConstantData.PHONE_NO), RequestMethod.POST, getActivity(), String.format(TappRequestBuilder.WS_GET_PROFILE, "9167466253"));
+		profileRequestId = networManager.addRequest(TappRequestBuilder.getRegisterUserRequest(ConstantData.PHONE_NO), RequestMethod.POST, getActivity(), String.format(TappRequestBuilder.WS_GET_PROFILE, userId));
 	}
 
 	@Override
@@ -113,14 +115,32 @@ public class MyProfileFragment extends BaseFragment implements OnClickListener, 
 					if (jArrayResponse.length() > 0) {
 						JSONObject jObj = jArrayResponse.getJSONObject(0);
 
-						txtStatus.setText(jObj.getString("bio"));
-						txtFullName.setText(jObj.getString("full_name"));
-						txtEmail.setText(jObj.getString("email"));
-						// txtBirthday.setText(jObj.getString(""));
-						txtAge.setText(jObj.getString("age"));
-						// txtSex.setText(jObj.getString(""));
-						txtWebpage.setText(jObj.getString("homepage"));
-						txtCity.setText(jObj.getString("city"));
+						if (Utils.isEmpty(jObj.getString("bio"))) {
+							txtStatus.setText(jObj.getString("bio"));
+						}
+						if (Utils.isEmpty(jObj.getString("full_name"))) {
+							txtFullName.setText(jObj.getString("full_name"));
+						}
+						if (Utils.isEmpty(jObj.getString("email"))) {
+							txtEmail.setText(jObj.getString("email"));
+						}
+						if (Utils.isEmpty(jObj.getString("dob"))) {
+							txtBirthday.setText(jObj.getString("dob"));
+						}
+						if (Utils.isEmpty(jObj.getString("age"))) {
+							txtAge.setText(jObj.getString("age"));
+						}
+						
+						tglGender.setChecked(Utils.isEmpty(jObj.getString("gender")) || jObj.getString("gender").equalsIgnoreCase("male") ? true : false);
+
+						if (Utils.isEmpty(jObj.getString("homepage"))) {
+							txtWebpage.setText(jObj.getString("homepage"));
+						}
+
+						if (Utils.isEmpty(jObj.getString("city"))) {
+							txtCity.setText(jObj.getString("city"));
+						}
+
 						// txtFollowers.setText(jObj.getString(""));
 
 						String photoURL = jObj.getString("photo");

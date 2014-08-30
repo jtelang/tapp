@@ -250,12 +250,12 @@ int drawable abc_textfield_searchview_right_holo_dark 0x7f020055
 int drawable abc_textfield_searchview_right_holo_light 0x7f020056
 int drawable box_border 0x7f020057
 int drawable drawer_shadow 0x7f020058
-int drawable female 0x7f020059
-int drawable ic_drawer 0x7f02005a
-int drawable ic_launcher 0x7f02005b
-int drawable ic_menu_friendslist 0x7f02005c
-int drawable ic_menu_invite 0x7f02005d
-int drawable male 0x7f02005e
+int drawable ic_drawer 0x7f020059
+int drawable ic_launcher 0x7f02005a
+int drawable ic_menu_friendslist 0x7f02005b
+int drawable ic_menu_invite 0x7f02005c
+int drawable tgl_female 0x7f02005d
+int drawable tgl_male 0x7f02005e
 int drawable tgl_male_female 0x7f02005f
 int id action_add_me 0x7f05008e
 int id action_bar 0x7f05001c
@@ -366,6 +366,7 @@ int id textView3 0x7f050040
 int id textView4 0x7f050041
 int id textView5 0x7f050046
 int id textView6 0x7f05004a
+int id tglGender 0x7f050065
 int id title 0x7f05002b
 int id top_action_bar 0x7f050020
 int id txtAge 0x7f050066
@@ -390,7 +391,6 @@ int id txtPrice 0x7f05007f
 int id txtReceivedDate 0x7f050084
 int id txtRecommendedBy 0x7f050083
 int id txtRetailer 0x7f050086
-int id txtSex 0x7f050065
 int id txtSingerName 0x7f050079
 int id txtSongName 0x7f050089
 int id txtStatus 0x7f050061

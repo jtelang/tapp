@@ -93,11 +93,17 @@
                 android:layout_height="wrap_content"
                 android:text="@string/sex" />
 
-            <TextView
-                android:id="@+id/txtSex"
+            <ToggleButton
+                android:id="@+id/tglGender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margine_normal" />
+                android:layout_margin="@dimen/margine_small"
+                android:background="@drawable/tgl_male_female"
+                android:checked="true"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:textOff=""
+                android:textOn="" />
         </LinearLayout>
 
         <LinearLayout
@@ -184,7 +190,3 @@
     </LinearLayout>
 
 </ScrollView>
-
-
-
-

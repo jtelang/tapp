@@ -23,10 +23,12 @@ public class TappRequestBuilder implements PARAMS {
 	public static final String WS_GAME_TYPE = "gametype";
 	public static final String WS_GAMELIST_BY_CATEGORY = "myGames/show/%s";
 	public static final String WS_REGISTER_USER = "user";
-	public static final String WS_GET_PROFILE = "myUsers/show?pn=%s";
+	public static final String WS_GET_PROFILE = "myUsers/show?uid=%s";
 	public static final String WS_MY_FOLLOWERS = "myFollowers/show/%s";
 	public static final String WS_ADD_FOLLOWER = "myFollowers/save?uid=%s&fid=%s";
 	public static final String WS_BUY_MEDIA = "mediabuy";
+	public static final String WS_CONTACT_SYNC = "myContactSync/show?uid=%s&pn=%s";
+
 
 	public static HashMap<String, String> getRegisterUserRequest(String phone) {
 
